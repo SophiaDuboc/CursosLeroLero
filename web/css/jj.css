@@ -1,0 +1,412 @@
+﻿html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background-color: lightgray;
+}
+
+#navbar {
+	position: fixed;
+	/* Make it stick/fixed */
+	top: 0;
+	/* Stay on top */
+	width: 100%;
+	/* Full width */
+	transition: top 0.3s;
+	/* Transition effect when sliding down (and up) */
+	z-index: 200;
+	background-color: #D3D3D3;
+}
+
+#navbarcont {
+	top: 0;
+	/* Stay on top */
+	width: 100%;
+	/* Full width */
+	transition: top 0.3s;
+	/* Transition effect when sliding down (and up) */
+	z-index: 200;
+	background-color: #D3D3D3;
+}
+
+.navbar-custom {
+	background-color: #D3D3D3;
+}
+
+
+/* change the link color */
+
+.navbar-custom .navbar-nav .nav-link {
+	color: black;
+}
+
+
+/* change the color of active or hovered links */
+
+.navbar-custom .nav-item.active .nav-link,
+.navbar-custom .nav-item:hover .nav-link {
+	color: purple;
+	font-weight: bold;
+}
+
+.row {
+	margin-top: 30px;
+	text-align: center;
+}
+
+h1 {
+	margin-top: 10px;
+}
+
+.col-lg-4 {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.row {
+	margin-bottom: 50px;
+}
+
+#sobrerow {
+	margin-bottom: -40px;
+}
+
+[type=button], [type=reset], [type=submit], button {
+  -webkit-appearance: none;
+}
+
+#button {
+	display: inline-block;
+	background-color: purple;
+	width: 50px;
+	height: 50px;
+	text-align: center;
+	border-radius: 4px;
+	position: fixed;
+	bottom: 30px;
+	right: 30px;
+	transition: background-color .3s, opacity .5s, visibility .5s;
+	opacity: 0;
+	visibility: hidden;
+	z-index: 1000;
+}
+
+#button::after {
+	content: "⇑";
+	font-family: FontAwesome;
+	font-weight: normal;
+	font-style: normal;
+	font-size: 2em;
+	line-height: 50px;
+	color: white;
+}
+
+#button:hover {
+	cursor: pointer;
+	background-color: black;
+}
+
+#button:active {
+	background-color: purple;
+}
+
+#button.show {
+	opacity: 1;
+	visibility: visible;
+}
+
+#footdiv {
+	margin-top: -42px;
+}
+
+#textinstru {
+	text-align: center;
+	font-size: 60px;
+	margin-top: -50px;
+}
+
+#comentarios {
+	text-align: center;
+	font-size: 60px;
+	margin-top: -50px;
+}
+
+#footer {
+	position: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: -4em;
+}
+
+figure.snip1192 {
+	font-family: 'Raleway', Arial, sans-serif;
+	position: relative;
+	overflow: hidden;
+	margin: 10px;
+	min-width: 220px;
+	max-width: 310px;
+	width: 100%;
+	color: #333;
+	text-align: left;
+	box-shadow: none !important;
+}
+
+figure.snip1192 * {
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+
+figure.snip1192 img {
+	max-width: 100%;
+	height: 100px;
+	width: 100px;
+	border-radius: 50%;
+	margin-bottom: 15px;
+	display: inline-block;
+	z-index: 0;
+	position: relative;
+}
+
+figure.snip1192 blockquote {
+	margin: 0;
+	display: block;
+	border-radius: 8px;
+	position: relative;
+	background-color: #fafafa;
+	padding: 30px 50px 65px 50px;
+	font-size: 0.8em;
+	font-weight: 500;
+	margin: 0 0 -50px;
+	line-height: 1.6em;
+	box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+	text-align: left;
+}
+
+figure.snip1192 blockquote:before,
+figure.snip1192 blockquote:after {
+	font-family: 'FontAwesome';
+	content: "\201C";
+	position: absolute;
+	font-size: 50px;
+	opacity: 0.3;
+	font-style: normal;
+}
+
+figure.snip1192 blockquote:before {
+	top: 35px;
+	left: 20px;
+}
+
+figure.snip1192 blockquote:after {
+	content: "\201D";
+	right: 20px;
+	bottom: 35px;
+}
+
+figure.snip1192 .author {
+	margin: 0;
+	text-transform: uppercase;
+	text-align: center;
+	color: #000000;
+}
+
+figure.snip1192 .author h5 {
+	opacity: 0.8;
+	margin: 0;
+	font-weight: 800;
+}
+
+figure.snip1192 .author h5 span {
+	font-weight: 400;
+	text-transform: none;
+	display: block;
+}
+
+
+/* The Modal (background) */
+
+.modal {
+	display: none;
+	/* Hidden by default */
+	position: fixed;
+	/* Stay in place */
+	z-index: 1;
+	/* Sit on top */
+	left: 0;
+	top: 0;
+	width: 100%;
+	/* Full width */
+	height: 100%;
+	/* Full height */
+	background-color: rgb(0, 0, 0);
+	/* Fallback color */
+	background-color: rgba(0, 0, 0, 0.4);
+	/* Black w/ opacity */
+}
+
+
+/* Modal Content/Box */
+
+.modal-content {
+	background-color: transparent;
+	margin: 15% auto; /* 15% from the top and centered */
+	padding: none;
+/*border: 1px solid #888;*/
+	border: none;
+	width: 300px;
+	/* Could be more or less, depending on screen size */
+	height: 480px;
+	z-index: 999;
+	margin-top: 150px;
+	text-align: center;
+}
+
+.cards {
+	display: flex;
+	flex-wrap: wrap;
+	list-style: none;
+	margin: 0;
+	padding: 0;
+}
+
+.card {
+	background-color: white;
+	border-radius: 1rem;
+	box-shadow: 0 20px 40px -14px rgba(0, 0, 0, 0.25);
+	display: flex;
+	flex-direction: column;
+	overflow: hidden;
+}
+
+.card_content {
+	padding: 1rem;
+	background: linear-gradient(to bottom left, black 40%, black 100%);
+}
+
+.card_title {
+	color: #ffffff;
+	font-size: 1.1rem;
+	font-weight: 700;
+	letter-spacing: 1px;
+	text-transform: capitalize;
+	margin: 0px;
+	font-style: italic;
+}
+
+.card_text {
+	color: #ffffff;
+	font-size: 0.875rem;
+	line-height: 1.5;
+	margin-bottom: 1.25rem;
+	font-weight: 400;
+}
+
+#card1,
+#card2,
+#card3,
+#card4,
+#card5,
+#card6,
+#card7,
+#card8,
+#card9 {
+	width: 100%;
+	text-align: center;
+}
+
+.form-control {
+	box-shadow: none;
+	border-color: #ddd;
+}
+
+.form-control:focus {
+	border-color: #0300bd;
+}
+
+.login-form {
+	text-align: center;
+	width: 100%;
+	margin: 0 auto;
+	padding: 30px 0;
+}
+
+.login-form form {
+	color: #434343;
+	border-radius: 30px;
+	background: lightgray;
+	border: 1px solid #f3f3f3;
+	box-shadow: 0px 2px 2px rgba(0, 0, 0, 0.3);
+	padding: 30px;
+	display: inline-block;
+	width: 300px;
+	position: absolute;
+	left: 50%;
+	top: 50%;
+	transform: translate(-50%, -50%);
+	z-index: 1000;
+}
+
+.login-form h4 {
+	text-align: center;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+
+.login-form {
+  font-size: 62px;
+	color: rgb(255, 255, 255);
+	margin: 0 auto 30px;
+	text-align: center;
+	border-radius: 50%;
+	z-index: 9;
+	padding: 15px;
+}
+
+.login-form .form-group {
+	margin-bottom: 20px;
+}
+
+.login-form .form-control,
+.login-form .btn {
+	min-height: 40px;
+	border-radius: 2px;
+	transition: all 0.5s;
+}
+
+.login-form .close {
+	position: absolute;
+	top: 15px;
+	right: 15px;
+}
+
+.login-form .btn {
+	background: #8254cc;
+	border: none;
+	line-height: normal;
+}
+
+.login-form .btn:hover,
+.login-form .btn:focus {
+	background: #280166;
+}
+
+.login-form .checkbox-inline {
+	float: left;
+}
+
+.login-form input[type="checkbox"] {
+	margin-top: 2px;
+}
+
+.login-form .forgot-link {
+	float: right;
+}
+
+.login-form .small {
+	font-size: 13px;
+}
+
+.login-form a {
+	color: #624aba;
+}

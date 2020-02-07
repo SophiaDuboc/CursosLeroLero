@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>Lero Lero Registro de Alunos</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="icon" href="images/logotipo.png">
+    <link rel="stylesheet" href="css/style.css" />
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/jj.css">
+    <link rel="stylesheet" href="css/jumbotron.css">
+
+</head>
+
+<body>
+    <nav id="navbar" class="navbar navbar-custom navbar-light navbar-expand-lg fixed-top">
+        <div id="navbarcont" class="container">
+            <a class="navbar-brand" href="index.html">
+                <img src="images/logotipo.png" alt="" width="80" height="77">
+            </a>
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active">
+                    <a class="btn btn-secondary" href="tabelas.html">Back to Forms</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="form-v7">
+        <div class="form-v7-content container">
+            <form class="form-detail" action="#" method="post" id="myform">
+                <div id="row-title" class="form-row">
+                    <h1 class="display-3">Cadastro de Alunos</h1>
+                </div>
+                <div class="form-registro">
+                    <div class="sophia-jj">
+                        <ul id="progressbar">
+                            <li class="active">Conta</li>
+                            <li>Detalhes</li>
+                        </ul>
+                    </div>
+                    <div class="form-row">
+                        <label for="your_username">Nome de Usuário</label>
+                        <input type="text" name="username" id="username" class="input-text" minlength="3" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="password">PASSWORD</label>
+                        <input type="password" name="password" id="password" class="input-text" minlength="3" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="comfirm_password">CONFIRM PASSWORD</label>
+                        <input type="password" name="comfirm_password" id="comfirm_password" class="input-text" required>
+                    </div>
+                    <div class="form-row-last">
+                        <input type="submit" name="register" class="register" value="Próximo">
+                    </div>
+                </div>
+                <div style="display: none" class="form-detalhe">
+                    <div class="sophia-jj">
+                        <ul id="progressbar">
+                            <li>Conta</li class="active">
+                            <li class="active">Detalhes</li>
+                        </ul>
+                    </div>
+                    <div class="form-row">
+                        <label for="your_nome_completo">Nome Completo</label>
+                        <input minlength="3" type="text" name="nome_completo" id="nome_completo" class="input-text" required>
+                    </div>
+                    <div class="form-row">
+                        <label for="your_email">E-MAIL</label>
+                        <input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                    </div>
+                    <div class="form-row">
+                        <label for="your_cpf">CPF</label>
+                        <input maxlength="14" type="text" name="cpf" id="cpf" class="input-text" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+                    </div>
+                    <div class="form-row">
+                        <label for="your_celular">Celular</label>
+                        <input type="tel" name="celular" id="celular" class="input-text" maxlength="16" required pattern="\(\d{2}\)(\d{1}) (\d{4})-(\d{4})">
+                    </div>
+                    <div class="form-row">
+                        <label>Endereço</label>
+                        <input type="text" name="endereco" id="endereco" class="input-text" maxlength="50">
+                    </div>
+                    <div class="form-row">
+                        <label>Cidade</label>
+                        <input type="text" name="cidade" id="cidade" class="input-text" maxlength="30">
+                    </div>
+                    <div class="form-row">
+                        <label>Bairro</label>
+                        <input type="text" name="bairro" id="bairro" class="input-text" maxlength="30">
+                    </div>
+                    <div class="form-row">
+                        <label>CEP</label>
+                        <input type="text" name="cep" id="cep" class="input-text" maxlength="9">
+                    </div>
+                    <div class="form-row-last">
+                        <input type="submit" name="register" class="register" value="Registrar">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="container">
+        <hr>
+    </div>
+
+    <footer class="container">
+        <p>© 2020 JJ & Soph · Copyright UFF · Dev Web</p>
+    </footer>
+
+    <script src="js/jquery-3.4.1.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/jquery-1.11.1.min.js"></script>
+    <script src="js/jquery.validate.min.js"></script>
+    <script src="js/additional-methods.min.js"></script>
+    <script src="js/jquery.mask.js"></script>
+    <script src="js/sophia-aluno.js"></script>
+    <script src="js/jj.js"></script>
+</body>
+
+</html>
