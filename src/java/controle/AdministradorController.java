@@ -8,8 +8,6 @@ package controle;
 import aplicacao.Administrador;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -33,7 +31,7 @@ public class AdministradorController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -46,6 +44,7 @@ public class AdministradorController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet AdministradorController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
+            out.println("<b>" + result + "</b>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -66,7 +65,6 @@ public class AdministradorController extends HttpServlet {
         boolean isSuccess;
         try {
             AdministradorDAO dao = new AdministradorDAO();
-
             Administrador adm = new Administrador();
             adm.setLogin(request.getParameter("username"));
             adm.setSenha(request.getParameter("password"));
@@ -80,7 +78,6 @@ public class AdministradorController extends HttpServlet {
                 adm.setId(Integer.parseInt(request.getParameter("id")));
                 isSuccess = dao.updateSql(adm);
             }
-
             if (isSuccess) {
                 mensagem = "Sucesso na requisição!";
                 System.out.println(mensagem);
@@ -88,12 +85,13 @@ public class AdministradorController extends HttpServlet {
                 mensagem = "Não foi possível completar a sua requisição.";
                 System.out.println(mensagem);
             }
-
+            processRequest(request, response, mensagem, "");
         } catch (Exception ex) {
             mensagem = "Problema não esperado ao inserir adm";
             System.out.println("Erro ao inserir adm: " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
         }
-        processRequest(request, response, mensagem);
+
     }
 
     /**
@@ -108,21 +106,37 @@ public class AdministradorController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String mensagem;
+        String result;
         try {
             AdministradorDAO dao = new AdministradorDAO();
             Administrador adm = new Administrador();
 
-            adm.setLogin(request.getParameter("login"));
-            adm.setSenha(request.getParameter("senha"));
-            adm.setNome(request.getParameter("nome"));
+            boolean withCondition = false;
+            if (request.getParameter("login") != null) {
+                adm.setLogin(request.getParameter("login"));
+                withCondition = true;
+            }
+            if (request.getParameter("nome") != null) {
+                adm.setNome(request.getParameter("nome"));
+                withCondition = true;
+            }
+            if (request.getParameter("id") != null) {
+                adm.setId(Integer.parseInt(request.getParameter("id")));
+                withCondition = true;
+            }
 
-            List<Object> result = dao.selectAllSql();
-            mensagem = result.toString();
-            System.out.println("Select com sucesso");
-            processRequest(request, response, mensagem);
+            if (withCondition) {
+                result = dao.selectSqlWithCondidion(adm);
+            } else {
+                result = dao.selectAllSql();
+            }
+            mensagem = "Select foi um sucesso";
+            System.out.println(mensagem);
+            processRequest(request, response, mensagem, result);
         } catch (Exception ex) {
             mensagem = "Erro";
-            System.out.println(mensagem);
+            System.out.println(mensagem + "Erro: " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
         }
     }
 
@@ -145,12 +159,11 @@ public class AdministradorController extends HttpServlet {
             adm.setId(Integer.parseInt(request.getParameter("id")));
             dao.deleteSql(adm);
             System.out.println(mensagem);
-            processRequest(request, response, mensagem);
+            processRequest(request, response, mensagem, "");
         } catch (Exception ex) {
             mensagem = "erro";
             System.err.println(mensagem + "erro: " + ex.getMessage());
         }
-
     }
 
     /**

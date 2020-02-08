@@ -40,7 +40,7 @@ public abstract class AbstratoDAO {
     protected abstract PreparedStatement setPreparedStatementToInsert(PreparedStatement statement, Object object) throws Exception;
 
     protected abstract PreparedStatement setPreparedStatementToUpdate(PreparedStatement statement, Object object) throws Exception;
-    
+
     protected abstract PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception;
 
     protected abstract PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception;
@@ -48,6 +48,11 @@ public abstract class AbstratoDAO {
     protected abstract HashMap conditionToSelect(Object object) throws Exception;
 
     protected abstract ArrayList<Object> getListResponse(ResultSet result) throws Exception;
+
+    protected String convertResultToString(List<Object> result) {
+//        for()
+        return "";
+    }
 
     public boolean insertSql(Object object) {
         String query = "";
@@ -77,7 +82,7 @@ public abstract class AbstratoDAO {
         return true;
     }
 
-    public List<Object> selectSqlWithCondidion(Object object) {
+    public String selectSqlWithCondidion(Object object) {
         ResultSet resultSet;
         String query = "";
         try {
@@ -86,7 +91,8 @@ public abstract class AbstratoDAO {
             PreparedStatement ps = conexao.prepareStatement(query);
             ps = setPreparedStatementToSelect(ps, condition);
             resultSet = ps.executeQuery();
-            return getListResponse(resultSet);
+            List<Object> result = getListResponse(resultSet);
+            return convertResultToString(result);
         } catch (Exception ex) {
             System.out.println("Erro ao rodar a query\n" + query + "\n no metodo selectSqlWithCondidion(): " + ex.getMessage());
             return null;
@@ -106,14 +112,15 @@ public abstract class AbstratoDAO {
         return queryCondition;
     }
 
-    public List<Object>  selectAllSql() {
+    public String selectAllSql() {
         ResultSet resultSet;
         String query = "";
         try {
             query = "SELECT * FROM " + nomeTabela() + " ORDER BY id desc";
             PreparedStatement ps = conexao.prepareStatement(query);
             resultSet = ps.executeQuery();
-            return getListResponse(resultSet);
+            List<Object> result = getListResponse(resultSet);
+            return convertResultToString(result);
         } catch (Exception ex) {
             System.out.println("Erro ao rodar a query\n" + query + "\n no metodo selectSql(): " + ex.getMessage());
             return null;

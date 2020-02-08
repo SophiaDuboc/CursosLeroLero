@@ -32,7 +32,7 @@ public class TurmasController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -45,6 +45,7 @@ public class TurmasController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet TurmasController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
+            out.println("<b>" + result + "</b>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +63,121 @@ public class TurmasController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String mensagem;
+        boolean isSuccess;
         try {
+            TurmasDAO dao = new TurmasDAO();
             Turmas turma = new Turmas();
-            turma.setId(Integer.parseInt(request.getParameter("id")));
             turma.setInstrutoresId(Integer.parseInt(request.getParameter("instrutoresId")));
             turma.setCursosId(Integer.parseInt(request.getParameter("cursosId")));
             turma.setDataInicio(Date.valueOf(request.getParameter("dataInicio")));
             turma.setDataFinal(Date.valueOf(request.getParameter("dataFinal")));
             turma.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
 
-            TurmasDAO dao = new TurmasDAO();
-
-            if (dao.insertSql(turma)) {
-                mensagem = "Turma criada com sucesso";
+            if (request.getParameter("id") == null) {
+                System.out.println("A requisicao eh para um insert");
+                isSuccess = dao.insertSql(turma);
             } else {
-                mensagem = "Turma ja existe";
+                System.out.println("A requisicao eh para um update");
+                turma.setId(Integer.parseInt(request.getParameter("id")));
+                isSuccess = dao.updateSql(turma);
             }
+            if (isSuccess) {
+                mensagem = "Sucesso na requisição!";
+                System.out.println(mensagem);
+            } else {
+                mensagem = "Não foi possível completar a sua requisição.";
+                System.out.println(mensagem);
+            }
+            processRequest(request, response, mensagem, "");
 
         } catch (Exception ex) {
             mensagem = "erro";
             System.out.println(mensagem + " : " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
         }
-        processRequest(request, response, mensagem);
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String mensagem;
+        String result;
+        try {
+            TurmasDAO dao = new TurmasDAO();
+            Turmas turmas = new Turmas();
+
+            boolean withCondition = false;
+            if (request.getParameter("id") != null) {
+                turmas.setId(Integer.parseInt(request.getParameter("id")));
+                withCondition = true;
+            }
+            if (request.getParameter("instrutoresId") != null) {
+                turmas.setInstrutoresId(Integer.parseInt(request.getParameter("instrutoresId")));
+                withCondition = true;
+            }
+            if (request.getParameter("cursosId") != null) {
+                turmas.setCursosId(Integer.parseInt(request.getParameter("cursosId")));
+                withCondition = true;
+            }
+            if (request.getParameter("cargaHoraria") != null) {
+                turmas.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
+                withCondition = true;
+            }
+            if (request.getParameter("dataInicio") != null) {
+                turmas.setDataInicio(Date.valueOf(request.getParameter("dataInicio")));
+                withCondition = true;
+            }
+            if (request.getParameter("dataFinal") != null) {
+                turmas.setDataFinal(Date.valueOf(request.getParameter("dataFinal")));
+                withCondition = true;
+            }
+            if (withCondition) {
+                result = dao.selectSqlWithCondidion(turmas);
+            } else {
+                result = dao.selectAllSql();
+            }
+            mensagem = "Select foi um sucesso";
+            System.out.println(mensagem);
+            processRequest(request, response, mensagem, result);
+        } catch (Exception ex) {
+            mensagem = "Erro";
+            System.out.println(mensagem + "Erro: " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>DELET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String mensagem;
+        try {
+            mensagem = "sucesso";
+            TurmasDAO dao = new TurmasDAO();
+            Turmas turmas = new Turmas();
+            turmas.setId(Integer.parseInt(request.getParameter("id")));
+            dao.deleteSql(turmas);
+            System.out.println(mensagem);
+            processRequest(request, response, mensagem, "");
+        } catch (Exception ex) {
+            mensagem = "erro";
+            System.err.println(mensagem + "erro: " + ex.getMessage());
+        }
     }
 
     /**

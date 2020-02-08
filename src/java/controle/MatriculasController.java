@@ -32,7 +32,7 @@ public class MatriculasController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -45,6 +45,7 @@ public class MatriculasController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet MatriculasController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
+            out.println("<b>" + result + "</b>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,28 +63,117 @@ public class MatriculasController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String mensagem;
+        boolean isSuccess;
         try {
+            MatriculasDAO dao = new MatriculasDAO();
             Matriculas mat = new Matriculas();
-            mat.setId(Integer.parseInt(request.getParameter("id")));
             mat.setTurmaId(Integer.parseInt(request.getParameter("turmaId")));
             mat.setAlunoId(Integer.parseInt(request.getParameter("alunoId")));
             mat.setDate(Date.valueOf(request.getParameter("dataMatricula")));
             mat.setNota(Double.parseDouble(request.getParameter("nota")));
-            
-            MatriculasDAO dao = new MatriculasDAO();
-            
-            if (dao.insertSql(mat)) {
-                mensagem = "Aluno matriculado com sucesso";
+
+            if (request.getParameter("id") == null) {
+                System.out.println("A requisicao eh para um insert");
+                isSuccess = dao.insertSql(mat);
             } else {
-                mensagem = "Aluno ja matriculado";
+                System.out.println("A requisicao eh para um update");
+                mat.setId(Integer.parseInt(request.getParameter("id")));
+                isSuccess = dao.updateSql(mat);
+            }
+            if (isSuccess) {
+                mensagem = "Sucesso na requisição!";
+                System.out.println(mensagem);
+            } else {
+                mensagem = "Não foi possível completar a sua requisição.";
                 System.out.println(mensagem);
             }
-            
+
+            processRequest(request, response, mensagem, "");
         } catch (Exception ex) {
             mensagem = "Erro";
             System.out.println(mensagem + " : " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
         }
-        processRequest(request, response, mensagem);
+
+    }
+
+    /**
+     * Handles the HTTP <code>GET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String mensagem;
+        String result;
+        try {
+            MatriculasDAO dao = new MatriculasDAO();
+            Matriculas mat = new Matriculas();
+
+            boolean withCondition = false;
+            if (request.getParameter("id") != null) {
+                mat.setId(Integer.parseInt(request.getParameter("id")));
+                withCondition = true;
+            }
+            if (request.getParameter("turmaId") != null) {
+                mat.setTurmaId(Integer.parseInt(request.getParameter("turmaId")));
+                withCondition = true;
+            }
+            if (request.getParameter("alunoId") != null) {
+                mat.setAlunoId(Integer.parseInt(request.getParameter("alunoId")));
+                withCondition = true;
+            }
+            if (request.getParameter("dataMatricula") != null) {
+                mat.setDate(Date.valueOf(request.getParameter("dataMatricula")));
+                withCondition = true;
+            }
+            if (request.getParameter("note") != null) {
+                mat.setNota(Double.parseDouble(request.getParameter("nota")));
+                withCondition = true;
+            }
+            if (withCondition) {
+                result = dao.selectSqlWithCondidion(mat);
+            } else {
+                result = dao.selectAllSql();
+            }
+            mensagem = "Select foi um sucesso";
+            System.out.println(mensagem);
+            processRequest(request, response, mensagem, result);
+        } catch (Exception ex) {
+            mensagem = "Erro";
+            System.out.println(mensagem + "Erro: " + ex.getMessage());
+            processRequest(request, response, mensagem, "");
+        }
+    }
+
+    /**
+     * Handles the HTTP <code>DELET</code> method.
+     *
+     * @param request servlet request
+     * @param response servlet response
+     * @throws ServletException if a servlet-specific error occurs
+     * @throws IOException if an I/O error occurs
+     */
+    @Override
+    protected void doDelete(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String mensagem;
+        try {
+            mensagem = "sucesso";
+            MatriculasDAO dao = new MatriculasDAO();
+            Matriculas mat = new Matriculas();
+            mat.setId(Integer.parseInt(request.getParameter("id")));
+            dao.deleteSql(mat);
+            System.out.println(mensagem);
+            processRequest(request, response, mensagem, "");
+        } catch (Exception ex) {
+            mensagem = "erro";
+            System.err.println(mensagem + "erro: " + ex.getMessage());
+        }
     }
 
     /**
