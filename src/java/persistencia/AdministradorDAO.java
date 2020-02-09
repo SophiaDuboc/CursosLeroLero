@@ -12,6 +12,9 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -68,31 +71,20 @@ public class AdministradorDAO extends AbstratoDAO {
         HashMap<String, String> condicao = new HashMap();
         Administrador adm = (Administrador) object;
         if (adm.getId() != 0) {
-            condicao.put("chave", "id");
-            condicao.put("valor", Integer.toString(adm.getId()));
+            condicao.put("id", Integer.toString(adm.getId()));
         } else if (adm.getLogin() != null) {
-            condicao.put("chave", "login");
-            condicao.put("valor", adm.getLogin());
-        } else if (adm.getSenha() != null) {
-            condicao.put("chave", "senha");
-            condicao.put("valor", adm.getSenha());
+            condicao.put("login", adm.getLogin());
         } else if (adm.getNome() != null) {
-            condicao.put("chave", ("nome"));
-            condicao.put("senha", adm.getNome());
+            condicao.put("nome", adm.getNome());
         }
         return condicao;
     }
 
     @Override
-    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected ArrayList<Object> getListResponse(ResultSet resultSet) throws Exception {
         ArrayList<Object> response = new ArrayList<>();
-        Administrador adm = new Administrador();
         while (resultSet.next()) {
+            Administrador adm = new Administrador();
             adm.setId(resultSet.getInt("id"));
             adm.setLogin(resultSet.getString("login"));
             adm.setSenha(resultSet.getString("senha"));
@@ -107,6 +99,25 @@ public class AdministradorDAO extends AbstratoDAO {
         Administrador adm = (Administrador) object;
         statement.setInt(1, adm.getId());
         return statement;
+    }
+
+    @Override
+    protected String convertResultToString(List<Object> result) throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Object objeto : result) {
+                JSONObject json = new JSONObject();
+                Administrador adm = (Administrador) objeto;
+                json.put("id", adm.getId());
+                json.put("nome", adm.getNome());
+                json.put("login", adm.getLogin());
+                json.put("senha", adm.getSenha());
+                jsonArray.put(json);
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
+        }
+        return jsonArray.toString();
     }
 
 }

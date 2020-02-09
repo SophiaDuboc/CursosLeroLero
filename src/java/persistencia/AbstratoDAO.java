@@ -5,8 +5,6 @@
  */
 package persistencia;
 
-import aplicacao.Alunos;
-import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -15,7 +13,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.json.JsonObject;
+import org.json.JSONArray;
+import org.json.simple.parser.JSONParser;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -43,16 +44,20 @@ public abstract class AbstratoDAO {
 
     protected abstract PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception;
 
-    protected abstract PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception;
+    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap<Object, Object> object) throws Exception {
+        int index = 1;
+        for (Map.Entry<Object, Object> entry : object.entrySet()) {
+            statement.setString(index, entry.getValue().toString());
+            index++;
+        }
+        return statement;
+    }
 
     protected abstract HashMap conditionToSelect(Object object) throws Exception;
 
     protected abstract ArrayList<Object> getListResponse(ResultSet result) throws Exception;
 
-    protected String convertResultToString(List<Object> result) {
-//        for()
-        return "";
-    }
+    protected abstract String convertResultToString(List<Object> result) throws ParseException;
 
     public boolean insertSql(Object object) {
         String query = "";
@@ -86,7 +91,7 @@ public abstract class AbstratoDAO {
         ResultSet resultSet;
         String query = "";
         try {
-            HashMap<String, String> condition = conditionToSelect(object);
+            HashMap<Object, Object> condition = conditionToSelect(object);
             query = "SELECT * FROM " + nomeTabela() + " WHERE " + getQueryConditionToSelect(condition) + " ORDER BY id DESC";
             PreparedStatement ps = conexao.prepareStatement(query);
             ps = setPreparedStatementToSelect(ps, condition);
@@ -99,15 +104,15 @@ public abstract class AbstratoDAO {
         }
     }
 
-    private String getQueryConditionToSelect(HashMap<String, String> condition) {
+    private String getQueryConditionToSelect(HashMap<Object, Object> condition) throws Exception {
         String queryCondition = "";
-        int size = condition.size();
         int aux = 1;
-        for (Map.Entry<String, String> entry : condition.entrySet()) {
-            if (!(aux == size || aux == 1)) {
+        for (Map.Entry<Object, Object> entry : condition.entrySet()) {
+            if (!(aux == 1)) {
                 queryCondition += " AND ";
             }
-            queryCondition += entry.getKey() + " = " + entry.getValue();
+            queryCondition += entry.getKey() + " = " + "?";
+            aux++;
         }
         return queryCondition;
     }
@@ -134,11 +139,11 @@ public abstract class AbstratoDAO {
             PreparedStatement ps = conexao.prepareCall(query);
             ps = setPreparedStatementToDelete(ps, object);
             ps.execute();
+            return true;
         } catch (Exception ex) {
             System.out.println("Erro ao rodar a query\n" + query + "\n no metodo deleteSql(): " + ex.getMessage());
             return false;
         }
-        return true;
     }
 
 }

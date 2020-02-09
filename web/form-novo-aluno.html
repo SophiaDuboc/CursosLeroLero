@@ -31,7 +31,7 @@
     </nav>
     <div class="form-v7">
         <div class="form-v7-content container">
-            <form class="form-detail" action="#" method="post" id="myform">
+            <form class="form-detail" action="AlunosController" method="post" id="myform">
                 <div id="row-title" class="form-row">
                     <h1 class="display-3">Cadastro de Novo Aluno</h1>
                 </div>
@@ -52,7 +52,8 @@
                     </div>
                     <div class="form-row">
                         <label for="comfirm_password">CONFIRM PASSWORD</label>
-                        <input type="password" name="comfirm_password" id="comfirm_password" class="input-text" required>
+                        <input type="password" name="comfirm_password" id="comfirm_password" class="input-text"
+                            required>
                     </div>
                     <div class="form-row-last">
                         <input type="submit" name="register" class="register" value="Próximo">
@@ -67,19 +68,23 @@
                     </div>
                     <div class="form-row">
                         <label for="your_nome_completo">Nome Completo</label>
-                        <input minlength="3" type="text" name="nome_completo" id="nome_completo" class="input-text" required>
+                        <input minlength="3" type="text" name="nome_completo" id="nome_completo" class="input-text"
+                            required>
                     </div>
                     <div class="form-row">
                         <label for="your_email">E-MAIL</label>
-                        <input type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                        <input type="text" name="your_email" id="your_email" class="input-text" required
+                            pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
                     </div>
                     <div class="form-row">
                         <label for="your_cpf">CPF</label>
-                        <input maxlength="14" type="text" name="cpf" id="cpf" class="input-text" required pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
+                        <input maxlength="14" type="text" name="cpf" id="cpf" class="input-text" required
+                            pattern="\d{3}\.\d{3}\.\d{3}-\d{2}">
                     </div>
                     <div class="form-row">
                         <label for="your_celular">Celular</label>
-                        <input type="tel" name="celular" id="celular" class="input-text" maxlength="16" required pattern="\(\d{2}\)(\d{1}) (\d{4})-(\d{4})">
+                        <input type="tel" name="celular" id="celular" class="input-text" maxlength="16" required
+                            pattern="\(\d{2}\)(\d{1}) (\d{4})-(\d{4})">
                     </div>
                     <div class="form-row">
                         <label>Endereço</label>
@@ -98,7 +103,8 @@
                         <input type="text" name="cep" id="cep" class="input-text" maxlength="9">
                     </div>
                     <div class="form-row-last">
-                        <input type="submit" name="register" class="register" value="Registrar">
+                        <input type="submit" name="register" class="register" value="Registrar"
+                            href="./AlunosController">
                     </div>
                 </div>
             </form>

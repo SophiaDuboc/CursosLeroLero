@@ -11,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -53,7 +57,7 @@ public class CursosDAO extends AbstratoDAO {
                 + "requisito = ?, "
                 + "ementa = ?, "
                 + "carga_horaria = ?, "
-                + "preco = ?,";
+                + "preco = ?";
     }
 
     @Override
@@ -69,23 +73,66 @@ public class CursosDAO extends AbstratoDAO {
     }
 
     @Override
-    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected HashMap conditionToSelect(Object object) {
+        HashMap<String, String> condicao = new HashMap();
+        Cursos curso = (Cursos) object;
+        if (curso.getId() != 0) {
+            condicao.put("id", Integer.toString(curso.getId()));
+        } else if (curso.getNome() != null) {
+            condicao.put("nome", curso.getNome());
+        } else if (curso.getRequisito() != null) {
+            condicao.put("requisito", curso.getRequisito());
+        } else if (curso.getEmenta() != null) {
+            condicao.put("ementa", curso.getEmenta());
+        } else if (curso.getCargaHoraria() != 0) {
+            condicao.put("carga_horaria", Integer.toString(curso.getCargaHoraria()));
+        } else if (curso.getPreco() != 0) {
+            condicao.put("preco", String.valueOf(curso.getPreco()));
+        }
+        return condicao;
     }
 
     @Override
-    protected HashMap conditionToSelect(Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    protected ArrayList<Object> getListResponse(ResultSet result) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected ArrayList<Object> getListResponse(ResultSet resultSet) throws Exception {
+        ArrayList<Object> response = new ArrayList<>();
+        while (resultSet.next()) {
+            Cursos curso = new Cursos();
+            curso.setId(resultSet.getInt("id"));
+            curso.setNome(resultSet.getString("nome"));
+            curso.setRequisito(resultSet.getString("requisito"));
+            curso.setEmenta(resultSet.getString("ementa"));
+            curso.setCargaHoraria(resultSet.getShort("cargaHoraria"));
+            curso.setPreco(resultSet.getDouble("preco"));
+            response.add(curso);
+        }
+        return response;
     }
 
     @Override
     protected PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Cursos curso = (Cursos) object;
+        statement.setInt(1, curso.getId());
+        return statement;
+    }
+
+    @Override
+    protected String convertResultToString(List<Object> result) throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Object objeto : result) {
+                JSONObject json = new JSONObject();
+                Cursos curso = (Cursos) objeto;
+                json.put("id", curso.getId());
+                json.put("nome", curso.getNome());
+                json.put("requisito", curso.getRequisito());
+                json.put("ementa", curso.getEmenta());
+                json.put("carga_horaria", curso.getCargaHoraria());
+                json.put("preco", curso.getPreco());
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
+        }
+        return jsonArray.toString();
     }
 
 }

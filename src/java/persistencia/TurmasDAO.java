@@ -6,11 +6,16 @@
 package persistencia;
 
 import aplicacao.Turmas;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -69,23 +74,66 @@ public class TurmasDAO extends AbstratoDAO {
     }
 
     @Override
-    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected HashMap conditionToSelect(Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HashMap<String, String> condicao = new HashMap();
+        Turmas turma = new Turmas();
+        if (turma.getId() != 0) {
+            condicao.put("id", Integer.toString(turma.getId()));
+        } else if (turma.getInstrutoresId() != 0) {
+            condicao.put("instrutoresId", Integer.toString(turma.getInstrutoresId()));
+        } else if (turma.getCursosId() != 0) {
+            condicao.put("cursosId", Integer.toString(turma.getCursosId()));
+        } else if (turma.getDataInicio() != null) {
+            condicao.put("dataInicio", String.valueOf(turma.getDataInicio()));
+        } else if (turma.getDataFinal() != null) {
+            condicao.put("dataFinal", String.valueOf(turma.getDataFinal()));
+        } else if (turma.getCargaHoraria() != 0) {
+            condicao.put("cargaHoraria", Integer.toString(turma.getCargaHoraria()));
+        }
+        return condicao;
     }
 
     @Override
-    protected ArrayList<Object> getListResponse(ResultSet result) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected ArrayList<Object> getListResponse(ResultSet resultSet) throws Exception {
+        ArrayList<Object> response = new ArrayList<>();
+        while (resultSet.next()) {
+            Turmas turma = new Turmas();
+            turma.setId(resultSet.getInt("id"));
+            turma.setInstrutoresId(resultSet.getInt("instrutoresId"));
+            turma.setCursosId(resultSet.getInt("cursosId"));
+            turma.setDataInicio(resultSet.getDate("dataInicio"));
+            turma.setDataFinal(resultSet.getDate("dataFinal"));
+            turma.setCargaHoraria(resultSet.getShort("cargaHoraria"));
+            response.add(turma);
+        }
+        return response;
     }
 
     @Override
     protected PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Turmas turma = (Turmas) object;
+        statement.setInt(1, turma.getId());
+        return statement;
+    }
+
+    @Override
+    protected String convertResultToString(List<Object> result) throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Object objeto : result) {
+                JSONObject json = new JSONObject();
+                Turmas turma = (Turmas) objeto;
+                json.put("id", turma.getId());
+                json.put("instrutoresId", turma.getInstrutoresId());
+                json.put("cursosId", turma.getCursosId());
+                json.put("dataInicio", turma.getDataInicio());
+                json.put("dataFinal", turma.getDataFinal());
+                json.put("cargaHoraria", turma.getCargaHoraria());
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
+        }
+        return jsonArray.toString();
     }
 
 }

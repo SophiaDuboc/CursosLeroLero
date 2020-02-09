@@ -11,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -73,23 +77,71 @@ public class InstrutoresDAO extends AbstratoDAO {
     }
 
     @Override
-    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected HashMap conditionToSelect(Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HashMap<String, String> condicao = new HashMap();
+        Instrutores instrutor = (Instrutores) object;
+        if (instrutor.getId() != 0) {
+            condicao.put("id", Integer.toString(instrutor.getId()));
+        } else if (instrutor.getNome() != null) {
+            condicao.put("nome", instrutor.getNome());
+        } else if (instrutor.getEmail() != null) {
+            condicao.put("email", instrutor.getEmail());
+        } else if (instrutor.getValorHora() != 0) {
+            condicao.put("valorHora", Integer.toString(instrutor.getValorHora()));
+        } else if (instrutor.getLogin() != null) {
+            condicao.put("login", instrutor.getLogin());
+        } else if (instrutor.getSenha() != null) {
+            condicao.put("senha", instrutor.getSenha());
+        } else if (instrutor.getExperiencia() != null) {
+            condicao.put("experiencia", instrutor.getExperiencia());
+        }
+        return condicao;
     }
 
     @Override
-    protected ArrayList<Object> getListResponse(ResultSet result) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected ArrayList<Object> getListResponse(ResultSet resultSet) throws Exception {
+        ArrayList<Object> response = new ArrayList<>();
+        while (resultSet.next()) {
+            Instrutores instrutor = new Instrutores();
+            instrutor.setId(resultSet.getInt("id"));
+            instrutor.setNome(resultSet.getString("nome"));
+            instrutor.setEmail(resultSet.getString("email"));
+            instrutor.setValorHora(resultSet.getInt("valorHora"));
+            instrutor.setLogin(resultSet.getString("login"));
+            instrutor.setSenha(resultSet.getString("senha"));
+            instrutor.setExperiencia(resultSet.getString("experiencia"));
+            response.add(instrutor);
+        }
+        return response;
     }
 
     @Override
     protected PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Instrutores instrutor = (Instrutores) object;
+        statement.setInt(1, instrutor.getId());
+        return statement;
+    }
+
+    @Override
+    protected String convertResultToString(List<Object> result) throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Object objeto : result) {
+                JSONObject json = new JSONObject();
+                Instrutores instrutor = new Instrutores();
+                json.put("id", instrutor.getId());
+                json.put("nome", instrutor.getNome());
+                json.put("email", instrutor.getEmail());
+                json.put("valorHora", instrutor.getValorHora());
+                json.put("login", instrutor.getLogin());
+                json.put("senha", instrutor.getSenha());
+                json.put("experiencia", instrutor.getExperiencia());
+                jsonArray.put(json);
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
+        }
+        return jsonArray.toString();
     }
 
 }

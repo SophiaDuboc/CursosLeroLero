@@ -57,18 +57,18 @@ public class AlunosController extends HttpServlet {
         try {
             AlunosDAO dao = new AlunosDAO();
             Alunos aluno = new Alunos();
-            aluno.setNome(request.getParameter("nome"));
+            aluno.setNome(request.getParameter("nome_completo"));
             aluno.setCpf(request.getParameter("cpf"));
-            aluno.setEmail(request.getParameter("email"));
+            aluno.setEmail(request.getParameter("your_email"));
             aluno.setCelular(request.getParameter("celular"));
-            aluno.setLogin(request.getParameter("login"));
-            aluno.setSenha(request.getParameter("senha"));
+            aluno.setLogin(request.getParameter("username"));
+            aluno.setSenha(request.getParameter("password"));
             aluno.setEndereco(request.getParameter("endereco"));
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
             aluno.setCep(request.getParameter("cep"));
-            aluno.setComentario(request.getParameter("comentario"));
-            aluno.setAprovado(request.getParameter("aprovado"));
+//            aluno.setComentario(request.getParameter("comentario"));
+//            aluno.setAprovado(request.getParameter(" aprovado"));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");

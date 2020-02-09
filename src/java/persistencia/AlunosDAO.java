@@ -11,6 +11,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import org.json.JSONArray;
+import org.json.JSONObject;
+import org.json.simple.parser.ParseException;
 
 /**
  *
@@ -91,23 +95,80 @@ public class AlunosDAO extends AbstratoDAO {
     }
 
     @Override
-    protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
     protected HashMap conditionToSelect(Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        HashMap<String, String> condicao = new HashMap();
+        Alunos aluno = (Alunos) object;
+        if (aluno.getId() != 0) {
+            condicao.put("id", Integer.toString(aluno.getId()));
+        } else if (aluno.getLogin() != null) {
+            condicao.put("login", aluno.getLogin());
+        } else if (aluno.getNome() != null) {
+            condicao.put("nome", aluno.getNome());
+        } else if (aluno.getCpf() != null) {
+            condicao.put("cpf", aluno.getCpf());
+        } else if (aluno.getEmail() != null) {
+            condicao.put("email", aluno.getEmail());
+        } else if (aluno.getAprovado() != null) {
+            condicao.put("aprovado", aluno.getAprovado());
+        }
+        return condicao;
     }
 
     @Override
-    protected ArrayList<Object> getListResponse(ResultSet result) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    protected ArrayList<Object> getListResponse(ResultSet resultSet) throws Exception {
+        ArrayList<Object> response = new ArrayList<>();
+        while (resultSet.next()) {
+            Alunos aluno = new Alunos();
+            aluno.setId(Integer.parseInt(resultSet.getString("id")));
+            aluno.setCpf(resultSet.getString("cpf"));
+            aluno.setNome(resultSet.getString("nome"));
+            aluno.setEmail(resultSet.getString("email"));
+            aluno.setCelular(resultSet.getString("celular"));
+            aluno.setLogin(resultSet.getString("login"));
+            aluno.setSenha(resultSet.getString("senha"));
+            aluno.setEndereco(resultSet.getString("endereco"));
+            aluno.setCidade(resultSet.getString("cidade"));
+            aluno.setBairro(resultSet.getString("bairro"));
+            aluno.setCep(resultSet.getString("cep"));
+            aluno.setComentario(resultSet.getString("comentario"));
+            aluno.setAprovado(resultSet.getString("aprovado"));
+            response.add(aluno);
+        }
+        return response;
     }
 
     @Override
     protected PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Alunos aluno = (Alunos) object;
+        statement.setInt(1, aluno.getId());
+        return statement;
     }
 
+    @Override
+    protected String convertResultToString(List<Object> result) throws ParseException {
+        JSONArray jsonArray = new JSONArray();
+        try {
+            for (Object objeto : result) {
+                JSONObject json = new JSONObject();
+                Alunos aluno = (Alunos) objeto;
+                json.put("id", aluno.getId());
+                json.put("cpf", aluno.getCpf());
+                json.put("nome", aluno.getNome());
+                json.put("email", aluno.getEmail());
+                json.put("celular", aluno.getCelular());
+                json.put("login", aluno.getLogin());
+                json.put("senha", aluno.getSenha());
+                json.put("endereco", aluno.getEndereco());
+                json.put("cidade", aluno.getCidade());
+                json.put("bairro", aluno.getBairro());
+                json.put("cep", aluno.getCep());
+                json.put("comentario", aluno.getComentario());
+                json.put("aprovado", aluno.getAprovado());
+                jsonArray.put(json);
+            }
+        } catch (Exception ex) {
+            System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
+        }
+        return jsonArray.toString();
+    }
 }
