@@ -22,11 +22,10 @@ public class AlunosController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String resul)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
@@ -35,7 +34,7 @@ public class AlunosController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet CursosController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
-            out.println("<b>" + mensagem + "</b>");
+            out.println("<p>" + result + "</p>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,8 +66,6 @@ public class AlunosController extends HttpServlet {
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
             aluno.setCep(request.getParameter("cep"));
-//            aluno.setComentario(request.getParameter("comentario"));
-//            aluno.setAprovado(request.getParameter(" aprovado"));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");

@@ -59,7 +59,7 @@ public class InstrutoresDAO extends AbstratoDAO {
                 + "valor_hora = ?,"
                 + "login = ?,"
                 + "senha = ?,"
-                + "experiencia = ?,";
+                + "experiencia = ?";
     }
 
     @Override
@@ -71,7 +71,7 @@ public class InstrutoresDAO extends AbstratoDAO {
         statement.setString(4, instrutor.getLogin());
         statement.setString(5, instrutor.getSenha());
         statement.setString(6, instrutor.getExperiencia());
-        statement.setInt(7, instrutor.getId());
+        statement.setInt(6, instrutor.getId());
 
         return statement;
     }
@@ -106,7 +106,7 @@ public class InstrutoresDAO extends AbstratoDAO {
             instrutor.setId(resultSet.getInt("id"));
             instrutor.setNome(resultSet.getString("nome"));
             instrutor.setEmail(resultSet.getString("email"));
-            instrutor.setValorHora(resultSet.getInt("valorHora"));
+            instrutor.setValorHora(resultSet.getInt("valor_hora"));
             instrutor.setLogin(resultSet.getString("login"));
             instrutor.setSenha(resultSet.getString("senha"));
             instrutor.setExperiencia(resultSet.getString("experiencia"));
@@ -128,11 +128,11 @@ public class InstrutoresDAO extends AbstratoDAO {
         try {
             for (Object objeto : result) {
                 JSONObject json = new JSONObject();
-                Instrutores instrutor = new Instrutores();
+                Instrutores instrutor = (Instrutores) objeto;
                 json.put("id", instrutor.getId());
                 json.put("nome", instrutor.getNome());
                 json.put("email", instrutor.getEmail());
-                json.put("valorHora", instrutor.getValorHora());
+                json.put("valor_hora", instrutor.getValorHora());
                 json.put("login", instrutor.getLogin());
                 json.put("senha", instrutor.getSenha());
                 json.put("experiencia", instrutor.getExperiencia());

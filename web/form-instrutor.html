@@ -31,21 +31,28 @@
     </nav>
     <div class="form-v7">
         <div class="form-v7-content container">
-            <form class="form-detail" action="#" method="post" id="myform">
+            <form class="form-detail" action="InstrutoresController" method="post" id="myform">
                 <div id="row-title" class="form-row">
                     <h1 class="display-3">Cadastro de Instrutores</h1>
                 </div>
                 <div class="form-row">
                     <label>Nome Completo</label>
-                    <input minlength="3" maxlength="50" type="text" name="nome_completo" id="nome_completo" class="input-text" required>
+                    <input minlength="3" maxlength="50" type="text" name="nome_completo" id="nome_completo"
+                        class="input-text" required>
                 </div>
                 <div class="form-row">
                     <label for="your_email">E-mail</label>
-                    <input maxlength="50" type="text" name="your_email" id="your_email" class="input-text" required pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
+                    <input maxlength="50" type="text" name="your_email" id="your_email" class="input-text" required
+                        pattern="[^@]+@[^@]+.[a-zA-Z]{2,6}">
                 </div>
                 <div class="form-row">
                     <label>Valor/Hora</label>
                     <input maxlength="10" type="text" name="money" id="money" class="input-text">
+                </div>
+                <div class="form-group">
+                    <label id="text2" for="textarea">Experiência</label>
+                    <textarea class="form-control" name="experiencia" id="textarea" maxlength="255" rows="5"
+                        cols="40"></textarea>
                 </div>
                 <div class="form-row">
                     <label for="username">Login</label>
@@ -60,7 +67,8 @@
                     <input type="password" name="comfirm_password" id="comfirm_password" class="input-text" required>
                 </div>
                 <div class="form-row-last">
-                    <input type="submit" name="register" class="register" value="Registrar">
+                    <input type="submit" name="register" class="register" value="Registrar"
+                        href="./InstrutoresController">
                 </div>
             </form>
         </div>

@@ -5,7 +5,6 @@
  */
 package controle;
 
-import aplicacao.Administrador;
 import aplicacao.Cursos;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,7 +13,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import persistencia.AdministradorDAO;
 import persistencia.CursosDAO;
 
 /**
@@ -46,7 +44,7 @@ public class CursosController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet CursosController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
-            out.println("<b>" + mensagem + "</b>");
+            out.println("<p>" + result + "</p>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -68,11 +66,11 @@ public class CursosController extends HttpServlet {
         try {
             CursosDAO dao = new CursosDAO();
             Cursos curso = new Cursos();
-            curso.setNome(request.getParameter("nome"));
-            curso.setRequisito(request.getParameter("requisito"));
+            curso.setNome(request.getParameter("nome_curso"));
+            curso.setRequisito(request.getParameter("requisitos"));
             curso.setEmenta(request.getParameter("ementa"));
-            curso.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
-            curso.setPreco(Double.parseDouble(request.getParameter("preco")));
+            curso.setCargaHoraria(Short.parseShort(request.getParameter("carga_horaria")));
+            curso.setPreco(Double.parseDouble(request.getParameter("money")));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");

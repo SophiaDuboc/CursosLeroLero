@@ -45,7 +45,7 @@ public class MatriculasController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet MatriculasController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
-            out.println("<b>" + result + "</b>");
+            out.println("<p>" + result + "</p>");
             out.println("</body>");
             out.println("</html>");
         }

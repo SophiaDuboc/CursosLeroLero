@@ -45,7 +45,7 @@ public class InstrutoresController extends HttpServlet {
             out.println("<body>");
             out.println("<h1>Servlet InstrutoresController at " + request.getContextPath() + "</h1>");
             out.println(mensagem);
-            out.println("<b>" + result + "</b>");
+            out.println("<p>" + result + "</p>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -67,12 +67,12 @@ public class InstrutoresController extends HttpServlet {
         try {
             InstrutoresDAO dao = new InstrutoresDAO();
             Instrutores instrutor = new Instrutores();
-            instrutor.setNome(request.getParameter("nome"));
-            instrutor.setEmail(request.getParameter("email"));
-            instrutor.setValorHora(Integer.parseInt(request.getParameter("valorHora")));
-            instrutor.setLogin(request.getParameter("login"));
-            instrutor.setSenha(request.getParameter("senha"));
-            instrutor.setExperiencia(request.getParameter("experiencia"));
+            instrutor.setNome(request.getParameter("nome_completo"));
+            instrutor.setEmail(request.getParameter("your_email"));
+            instrutor.setValorHora(Integer.parseInt(request.getParameter("money")));
+            instrutor.setLogin(request.getParameter("username"));
+            instrutor.setSenha(request.getParameter("password"));
+//            instrutor.setExperiencia(request.getParameter("experiencia"));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
@@ -115,24 +115,24 @@ public class InstrutoresController extends HttpServlet {
             Instrutores instrutores = new Instrutores();
 
             boolean withCondition = false;
-            if (request.getParameter("login") != null) {
-                instrutores.setLogin(request.getParameter("login"));
+            if (request.getParameter("username") != null) {
+                instrutores.setLogin(request.getParameter("username"));
                 withCondition = true;
             }
-            if (request.getParameter("nome") != null) {
-                instrutores.setNome(request.getParameter("nome"));
+            if (request.getParameter("nome_completo") != null) {
+                instrutores.setNome(request.getParameter("nome_completo"));
                 withCondition = true;
             }
             if (request.getParameter("id") != null) {
                 instrutores.setId(Integer.parseInt(request.getParameter("id")));
                 withCondition = true;
             }
-            if (request.getParameter("valaorHora") != null) {
-                instrutores.setValorHora(Integer.parseInt(request.getParameter("valorHora")));
+            if (request.getParameter("money") != null) {
+                instrutores.setValorHora(Integer.parseInt(request.getParameter("money")));
                 withCondition = true;
             }
-            if (request.getParameter("email") != null) {
-                instrutores.setEmail(request.getParameter("valorHora"));
+            if (request.getParameter("your_email") != null) {
+                instrutores.setEmail(request.getParameter("your_email"));
                 withCondition = true;
             }
 

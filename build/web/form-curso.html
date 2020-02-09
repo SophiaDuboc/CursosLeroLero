@@ -31,17 +31,19 @@
     </nav>
     <div class="form-v7">
         <div class="form-v7-content container">
-            <form class="form-detail" action="#" method="post" id="myform">
+            <form class="form-detail" action="CursosController" method="post" id="myform">
                 <div id="row-title" class="form-row">
                     <h1 class="display-3">Cadastro de Cursos</h1>
                 </div>
                 <div class="form-row">
                     <label for="your_nome_curso">Nome do Curso</label>
-                    <input minlength="3" maxlength="255" type="text" name="nome_curso" id="nome_curso" class="input-text" required>
+                    <input minlength="3" maxlength="255" type="text" name="nome_curso" id="nome_curso"
+                        class="input-text" required>
                 </div>
                 <div class="form-group">
                     <label>Carga Horária</label>
-                    <input maxlength="2" type="text" name="carga_horaria" id="carga_horaria" class="input-text" pattern="\d+?">
+                    <input maxlength="2" type="text" name="carga_horaria" id="carga_horaria" class="input-text"
+                        pattern="\d+?">
                 </div>
                 <div class="form-group">
                     <label>Preço</label>
@@ -49,14 +51,16 @@
                 </div>
                 <div class="form-group">
                     <label id="text1" for="textarea">Requisitos</label>
-                    <textarea class="form-control" id="textarea" maxlength="255" rows="5" cols="40"></textarea>
+                    <textarea class="form-control" neme="requisitos" id="textarea" maxlength="255" rows="5"
+                        cols="40"></textarea>
                 </div>
                 <div class="form-group">
                     <label id="text2" for="textarea">Ementa</label>
-                    <textarea class="form-control" id="textarea" maxlength="255" rows="5" cols="40"></textarea>
+                    <textarea class="form-control" name="ementa" id="textarea" maxlength="255" rows="5"
+                        cols="40"></textarea>
                 </div>
                 <div class="form-row-last">
-                    <input type="submit" name="register" class="register" value="Registrar">
+                    <input type="submit" name="register" class="register" value="Registrar" href="./CursosController">
                 </div>
             </form>
         </div>
