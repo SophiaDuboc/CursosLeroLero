@@ -139,9 +139,9 @@ public class CursosController extends HttpServlet {
             }
 
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(cursos);
+                result = dao.selectSqlWithCondidion(cursos).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

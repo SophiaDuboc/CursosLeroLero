@@ -126,9 +126,9 @@ public class AdministradorController extends HttpServlet {
             }
 
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(adm);
+                result = dao.selectSqlWithCondidion(adm).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

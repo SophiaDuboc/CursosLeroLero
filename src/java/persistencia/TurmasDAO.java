@@ -6,15 +6,14 @@
 package persistencia;
 
 import aplicacao.Turmas;
-import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -122,9 +121,13 @@ public class TurmasDAO extends AbstratoDAO {
     }
 
     @Override
-    protected String convertResultToString(List<Object> result) throws ParseException {
-        JSONArray jsonArray = new JSONArray();
+    protected JSONObject convertResultToJson(List<Object> result) throws ParseException {
+        JSONObject resposta = new JSONObject();
         try {
+            resposta.put("current", 1);
+            resposta.put("rowCount", 10);
+            resposta.put("total", result.size());
+            JSONArray jsonArray = new JSONArray();
             for (Object objeto : result) {
                 JSONObject json = new JSONObject();
                 Turmas turma = (Turmas) objeto;
@@ -134,11 +137,12 @@ public class TurmasDAO extends AbstratoDAO {
                 json.put("dataInicio", turma.getDataInicio());
                 json.put("dataFinal", turma.getDataFinal());
                 json.put("cargaHoraria", turma.getCargaHoraria());
+                jsonArray.add(json);
             }
+            resposta.put("rows", jsonArray);
         } catch (Exception ex) {
             System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
         }
-        return jsonArray.toString();
+        return resposta;
     }
-
 }

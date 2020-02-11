@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -129,7 +129,7 @@ public class InstrutoresDAO extends AbstratoDAO {
     }
 
     @Override
-    protected String convertResultToString(List<Object> result) throws ParseException {
+    protected JSONObject convertResultToJson(List<Object> result) throws ParseException {
         JSONObject resposta = new JSONObject();
         try {
             resposta.put("current", 1);
@@ -146,13 +146,13 @@ public class InstrutoresDAO extends AbstratoDAO {
                 json.put("login", instrutor.getLogin());
                 json.put("senha", instrutor.getSenha());
                 json.put("experiencia", instrutor.getExperiencia());
-                jsonArray.put(json);
+                jsonArray.add(json);
             }
             resposta.put("rows", jsonArray);
         } catch (Exception ex) {
             System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
         }
-        return resposta.toString();
+        return resposta;
     }
 
 }

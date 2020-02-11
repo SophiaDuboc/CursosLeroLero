@@ -127,9 +127,9 @@ public class InstrutoresController extends HttpServlet {
                 withCondition = true;
             }
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(instrutores);
+                result = dao.selectSqlWithCondidion(instrutores).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

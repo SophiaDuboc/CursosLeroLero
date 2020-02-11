@@ -17,6 +17,9 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 import persistencia.AdministradorDAO;
 import persistencia.AlunosDAO;
 import persistencia.InstrutoresDAO;
@@ -82,7 +85,7 @@ public class LoginController extends HttpServlet {
                 session.setAttribute("tipoSession", "intruso");
             }
         } catch (Exception ex) {
-
+            System.out.println("ERRRO NÃO ESPERADO NESSA CARALHA: " + ex.getMessage());
         }
 
         processRequest(request, response);
@@ -94,7 +97,9 @@ public class LoginController extends HttpServlet {
         aluno.setLogin(login);
         aluno.setSenha(senha);
 
-        if (dao.selectSqlWithCondidion(aluno).equals("")) {
+        JSONObject jsonResp = dao.selectSqlWithCondidion(aluno);
+        Long total = (Long) jsonResp.get("total");
+        if (total == 0) {
             return false;
         }
         return true;
@@ -105,18 +110,22 @@ public class LoginController extends HttpServlet {
         Administrador adm = new Administrador();
         adm.setLogin(login);
         adm.setSenha(senha);
-        if (dao.selectSqlWithCondidion(adm).equals("")) {
+        JSONObject jsonResp = dao.selectSqlWithCondidion(adm);
+        Long total = (Long) jsonResp.get("total");
+        if (total == 0) {
             return false;
         }
         return true;
     }
 
-    private boolean verificaSeEInstrutor(String login, String senha) throws SQLException {
+    private boolean verificaSeEInstrutor(String login, String senha) throws SQLException, ParseException {
         InstrutoresDAO dao = new InstrutoresDAO();
         Instrutores instrutor = new Instrutores();
         instrutor.setLogin(login);
         instrutor.setSenha(senha);
-        if (dao.selectSqlWithCondidion(instrutor).equals("")) {
+        JSONObject jsonResp = dao.selectSqlWithCondidion(instrutor);
+        Long total = (Long) jsonResp.get("total");
+        if (total == 0) {
             return false;
         }
         return true;

@@ -136,9 +136,9 @@ public class MatriculasController extends HttpServlet {
                 withCondition = true;
             }
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(mat);
+                result = dao.selectSqlWithCondidion(mat).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

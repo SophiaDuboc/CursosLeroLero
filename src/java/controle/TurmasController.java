@@ -140,9 +140,9 @@ public class TurmasController extends HttpServlet {
                 withCondition = true;
             }
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(turmas);
+                result = dao.selectSqlWithCondidion(turmas).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

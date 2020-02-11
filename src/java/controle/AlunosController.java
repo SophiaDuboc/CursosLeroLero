@@ -121,9 +121,9 @@ public class AlunosController extends HttpServlet {
                 withCondition = true;
             }
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(aluno);
+                result = dao.selectSqlWithCondidion(aluno).toJSONString();
             } else {
-                result = dao.selectAllSql();
+                result = dao.selectAllSql().toJSONString();
             }
             mensagem = "Select foi um sucesso";
             System.out.println(mensagem);

@@ -12,8 +12,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -114,22 +114,28 @@ public class MatriculasDAO extends AbstratoDAO {
     }
 
     @Override
-    protected String convertResultToString(List<Object> result) throws ParseException {
-        JSONArray jsonArray = new JSONArray();
+    protected JSONObject convertResultToJson(List<Object> result) throws ParseException {
+        JSONObject resposta = new JSONObject();
         try {
+            resposta.put("current", 1);
+            resposta.put("rowCount", 10);
+            resposta.put("total", result.size());
+            JSONArray jsonArray = new JSONArray();
             for (Object objeto : result) {
                 JSONObject json = new JSONObject();
-                Matriculas mat = new Matriculas();
+                Matriculas mat = (Matriculas) objeto;
                 json.put("id", mat.getId());
                 json.put("turmasId", mat.getTurmaId());
                 json.put("alunosId", mat.getAlunoId());
                 json.put("dataMatricula", mat.getDate());
                 json.put("nota", mat.getNota());
+                jsonArray.add(json);
             }
+            resposta.put("rows", jsonArray);
         } catch (Exception ex) {
             System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
         }
-        return jsonArray.toString();
+        return resposta;
     }
 
 }

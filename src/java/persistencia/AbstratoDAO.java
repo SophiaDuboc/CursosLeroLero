@@ -13,9 +13,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONArray;
-import org.json.simple.parser.JSONParser;
-import org.json.JSONObject;
+import org.json.simple.JSONObject;
 import org.json.simple.parser.ParseException;
 
 /**
@@ -48,7 +46,7 @@ public abstract class AbstratoDAO {
 
     protected abstract ArrayList<Object> getListResponse(ResultSet result) throws Exception;
 
-    protected abstract String convertResultToString(List<Object> result) throws ParseException;
+    protected abstract JSONObject convertResultToJson(List<Object> result) throws ParseException;
 
     protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap<Object, Object> object) throws Exception {
         int index = 1;
@@ -87,7 +85,7 @@ public abstract class AbstratoDAO {
         return true;
     }
 
-    public String selectSqlWithCondidion(Object object) {
+    public JSONObject selectSqlWithCondidion(Object object) {
         ResultSet resultSet;
         String query = "";
         try {
@@ -97,7 +95,7 @@ public abstract class AbstratoDAO {
             ps = setPreparedStatementToSelect(ps, condition);
             resultSet = ps.executeQuery();
             List<Object> result = getListResponse(resultSet);
-            return convertResultToString(result);
+            return convertResultToJson(result);
         } catch (Exception ex) {
             System.out.println("Erro ao rodar a query\n" + query + "\n no metodo selectSqlWithCondidion(): " + ex.getMessage());
             return null;
@@ -117,7 +115,7 @@ public abstract class AbstratoDAO {
         return queryCondition;
     }
 
-    public String selectAllSql() {
+    public JSONObject selectAllSql() {
         ResultSet resultSet;
         String query = "";
         try {
@@ -125,7 +123,7 @@ public abstract class AbstratoDAO {
             PreparedStatement ps = conexao.prepareStatement(query);
             resultSet = ps.executeQuery();
             List<Object> result = getListResponse(resultSet);
-            return convertResultToString(result);
+            return convertResultToJson(result);
         } catch (Exception ex) {
             System.out.println("Erro ao rodar a query\n" + query + "\n no metodo selectSql(): " + ex.getMessage());
             return null;
