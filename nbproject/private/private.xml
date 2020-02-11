@@ -4,11 +4,9 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/controle/LoginController.java</file>
-            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/controle/InstrutoresController.java</file>
-            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/web/bootgrid-test.html</file>
+            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/filtros/FiltroAdmin.java</file>
             <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/controle/AlunosController.java</file>
-            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/persistencia/InstrutoresDAO.java</file>
-            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/web/js/bootgrid-instrutor.js</file>
+            <file>file:/C:/Users/sophi/Desktop/TRABDW/CursosLeroLero/src/java/controle/AdministradorController.java</file>
         </group>
     </open-files>
 </project-private>

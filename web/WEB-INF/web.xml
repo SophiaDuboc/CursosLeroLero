@@ -4,6 +4,14 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>filtros.LoginFilter</filter-class>
     </filter>
+    <filter>
+        <filter-name>FiltroAdmin</filter-name>
+        <filter-class>filtros.FiltroAdmin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>FiltroAdmin</filter-name>
+        <url-pattern>/acesso-restrito/admin/*</url-pattern>
+    </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <url-pattern>/*</url-pattern>

@@ -40,20 +40,8 @@ public class LoginController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet LoginController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet LoginController at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String urlDestino) throws ServletException, IOException {
+        response.sendRedirect("./" + urlDestino + ".html");
     }
 
     /**
@@ -67,28 +55,30 @@ public class LoginController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-
+        String urlDestino = "index";
         String login = request.getParameter("login");
         String senha = request.getParameter("senha");
         try {
             if (verificaSeEAluno(login, senha)) {
                 session.setAttribute("tipoSession", "aluno");
                 session.setAttribute("logado", "OK");
-
+                urlDestino = "acesso-restrito/aluno/painel-aluno";
             } else if (verificaSeEAdm(login, senha)) {
                 session.setAttribute("tipoSession", "adm");
                 session.setAttribute("logado", "OK");
+                urlDestino = "acesso-restrito/admin/painel-admin";
             } else if (verificaSeEInstrutor(login, senha)) {
                 session.setAttribute("tipoSession", "instrutor");
                 session.setAttribute("logado", "OK");
+                urlDestino = "acesso-restrito/instrutor/painel-instrutor";
             } else {
                 session.setAttribute("tipoSession", "intruso");
             }
+            processRequest(request, response, urlDestino);
         } catch (Exception ex) {
-            System.out.println("ERRRO NÃO ESPERADO NESSA CARALHA: " + ex.getMessage());
+            System.out.println("Erro nao esperado ao verificar login de usuario: " + ex.getMessage());
+            processRequest(request, response, urlDestino);
         }
-
-        processRequest(request, response);
     }
 
     private boolean verificaSeEAluno(String login, String senha) throws SQLException {
@@ -98,7 +88,7 @@ public class LoginController extends HttpServlet {
         aluno.setSenha(senha);
 
         JSONObject jsonResp = dao.selectSqlWithCondidion(aluno);
-        Long total = (Long) jsonResp.get("total");
+        Integer total = (Integer) jsonResp.get("total");
         if (total == 0) {
             return false;
         }
@@ -111,7 +101,7 @@ public class LoginController extends HttpServlet {
         adm.setLogin(login);
         adm.setSenha(senha);
         JSONObject jsonResp = dao.selectSqlWithCondidion(adm);
-        Long total = (Long) jsonResp.get("total");
+        Integer total = (Integer) jsonResp.get("total");
         if (total == 0) {
             return false;
         }
@@ -124,7 +114,7 @@ public class LoginController extends HttpServlet {
         instrutor.setLogin(login);
         instrutor.setSenha(senha);
         JSONObject jsonResp = dao.selectSqlWithCondidion(instrutor);
-        Long total = (Long) jsonResp.get("total");
+        Integer total = (Integer) jsonResp.get("total");
         if (total == 0) {
             return false;
         }
