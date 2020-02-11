@@ -78,15 +78,20 @@ public class CursosDAO extends AbstratoDAO {
         Cursos curso = (Cursos) object;
         if (curso.getId() != 0) {
             condicao.put("id", Integer.toString(curso.getId()));
-        } else if (curso.getNome() != null) {
+        }
+        if (curso.getNome() != null) {
             condicao.put("nome", curso.getNome());
-        } else if (curso.getRequisito() != null) {
+        }
+        if (curso.getRequisito() != null) {
             condicao.put("requisito", curso.getRequisito());
-        } else if (curso.getEmenta() != null) {
+        }
+        if (curso.getEmenta() != null) {
             condicao.put("ementa", curso.getEmenta());
-        } else if (curso.getCargaHoraria() != 0) {
+        }
+        if (curso.getCargaHoraria() != 0) {
             condicao.put("carga_horaria", Integer.toString(curso.getCargaHoraria()));
-        } else if (curso.getPreco() != 0) {
+        }
+        if (curso.getPreco() != 0) {
             condicao.put("preco", String.valueOf(curso.getPreco()));
         }
         return condicao;

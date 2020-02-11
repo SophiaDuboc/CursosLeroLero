@@ -72,9 +72,11 @@ public class AdministradorDAO extends AbstratoDAO {
         Administrador adm = (Administrador) object;
         if (adm.getId() != 0) {
             condicao.put("id", Integer.toString(adm.getId()));
-        } else if (adm.getLogin() != null) {
+        }
+        if (adm.getLogin() != null) {
             condicao.put("login", adm.getLogin());
-        } else if (adm.getNome() != null) {
+        }
+        if (adm.getNome() != null) {
             condicao.put("nome", adm.getNome());
         }
         return condicao;

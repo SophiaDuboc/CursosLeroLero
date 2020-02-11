@@ -79,15 +79,20 @@ public class TurmasDAO extends AbstratoDAO {
         Turmas turma = new Turmas();
         if (turma.getId() != 0) {
             condicao.put("id", Integer.toString(turma.getId()));
-        } else if (turma.getInstrutoresId() != 0) {
+        }
+        if (turma.getInstrutoresId() != 0) {
             condicao.put("instrutoresId", Integer.toString(turma.getInstrutoresId()));
-        } else if (turma.getCursosId() != 0) {
+        }
+        if (turma.getCursosId() != 0) {
             condicao.put("cursosId", Integer.toString(turma.getCursosId()));
-        } else if (turma.getDataInicio() != null) {
+        }
+        if (turma.getDataInicio() != null) {
             condicao.put("dataInicio", String.valueOf(turma.getDataInicio()));
-        } else if (turma.getDataFinal() != null) {
+        }
+        if (turma.getDataFinal() != null) {
             condicao.put("dataFinal", String.valueOf(turma.getDataFinal()));
-        } else if (turma.getCargaHoraria() != 0) {
+        }
+        if (turma.getCargaHoraria() != 0) {
             condicao.put("cargaHoraria", Integer.toString(turma.getCargaHoraria()));
         }
         return condicao;

@@ -75,13 +75,17 @@ public class MatriculasDAO extends AbstratoDAO {
         Matriculas mat = (Matriculas) object;
         if (mat.getId() != 0) {
             condicao.put("id", Integer.toString(mat.getId()));
-        } else if (mat.getTurmaId() != 0) {
+        }
+        if (mat.getTurmaId() != 0) {
             condicao.put("turmasId", Integer.toString(mat.getTurmaId()));
-        } else if (mat.getAlunoId() != 0) {
+        }
+        if (mat.getAlunoId() != 0) {
             condicao.put("alunosId", Integer.toString(mat.getAlunoId()));
-        } else if (mat.getDate() != null) {
+        }
+        if (mat.getDate() != null) {
             condicao.put("dataMatricula", String.valueOf(mat.getDate()));
-        } else if (mat.getNota() != 0) {
+        }
+        if (mat.getNota() != 0) {
             condicao.put("nota", Double.toString(mat.getNota()));
         }
         return condicao;

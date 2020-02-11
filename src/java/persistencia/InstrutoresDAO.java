@@ -82,17 +82,23 @@ public class InstrutoresDAO extends AbstratoDAO {
         Instrutores instrutor = (Instrutores) object;
         if (instrutor.getId() != 0) {
             condicao.put("id", Integer.toString(instrutor.getId()));
-        } else if (instrutor.getNome() != null) {
+        }
+        if (instrutor.getNome() != null) {
             condicao.put("nome", instrutor.getNome());
-        } else if (instrutor.getEmail() != null) {
+        }
+        if (instrutor.getEmail() != null) {
             condicao.put("email", instrutor.getEmail());
-        } else if (instrutor.getValorHora() != 0) {
+        }
+        if (instrutor.getValorHora() != 0) {
             condicao.put("valorHora", Integer.toString(instrutor.getValorHora()));
-        } else if (instrutor.getLogin() != null) {
+        }
+        if (instrutor.getLogin() != null) {
             condicao.put("login", instrutor.getLogin());
-        } else if (instrutor.getSenha() != null) {
+        }
+        if (instrutor.getSenha() != null) {
             condicao.put("senha", instrutor.getSenha());
-        } else if (instrutor.getExperiencia() != null) {
+        }
+        if (instrutor.getExperiencia() != null) {
             condicao.put("experiencia", instrutor.getExperiencia());
         }
         return condicao;
@@ -124,8 +130,12 @@ public class InstrutoresDAO extends AbstratoDAO {
 
     @Override
     protected String convertResultToString(List<Object> result) throws ParseException {
-        JSONArray jsonArray = new JSONArray();
+        JSONObject resposta = new JSONObject();
         try {
+            resposta.put("current", 1);
+            resposta.put("rowCount", 10);
+            resposta.put("total", result.size());
+            JSONArray jsonArray = new JSONArray();
             for (Object objeto : result) {
                 JSONObject json = new JSONObject();
                 Instrutores instrutor = (Instrutores) objeto;
@@ -138,10 +148,11 @@ public class InstrutoresDAO extends AbstratoDAO {
                 json.put("experiencia", instrutor.getExperiencia());
                 jsonArray.put(json);
             }
+            resposta.put("rows", jsonArray);
         } catch (Exception ex) {
             System.out.println("Erro no metodo convertResultToString(): " + ex.getMessage());
         }
-        return jsonArray.toString();
+        return resposta.toString();
     }
 
 }

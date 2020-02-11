@@ -44,6 +44,12 @@ public abstract class AbstratoDAO {
 
     protected abstract PreparedStatement setPreparedStatementToDelete(PreparedStatement statement, Object object) throws Exception;
 
+    protected abstract HashMap conditionToSelect(Object object) throws Exception;
+
+    protected abstract ArrayList<Object> getListResponse(ResultSet result) throws Exception;
+
+    protected abstract String convertResultToString(List<Object> result) throws ParseException;
+
     protected PreparedStatement setPreparedStatementToSelect(PreparedStatement statement, HashMap<Object, Object> object) throws Exception {
         int index = 1;
         for (Map.Entry<Object, Object> entry : object.entrySet()) {
@@ -52,12 +58,6 @@ public abstract class AbstratoDAO {
         }
         return statement;
     }
-
-    protected abstract HashMap conditionToSelect(Object object) throws Exception;
-
-    protected abstract ArrayList<Object> getListResponse(ResultSet result) throws Exception;
-
-    protected abstract String convertResultToString(List<Object> result) throws ParseException;
 
     public boolean insertSql(Object object) {
         String query = "";
@@ -92,7 +92,7 @@ public abstract class AbstratoDAO {
         String query = "";
         try {
             HashMap<Object, Object> condition = conditionToSelect(object);
-            query = "SELECT * FROM " + nomeTabela() + " WHERE " + getQueryConditionToSelect(condition) + " ORDER BY id DESC";
+            query = "SELECT * FROM " + nomeTabela() + " WHERE " + getQueryConditionToSelect(condition) + " ORDER BY id";
             PreparedStatement ps = conexao.prepareStatement(query);
             ps = setPreparedStatementToSelect(ps, condition);
             resultSet = ps.executeQuery();

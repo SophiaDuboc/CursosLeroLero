@@ -100,15 +100,20 @@ public class AlunosDAO extends AbstratoDAO {
         Alunos aluno = (Alunos) object;
         if (aluno.getId() != 0) {
             condicao.put("id", Integer.toString(aluno.getId()));
-        } else if (aluno.getLogin() != null) {
+        }
+        if (aluno.getLogin() != null) {
             condicao.put("login", aluno.getLogin());
-        } else if (aluno.getNome() != null) {
+        }
+        if (aluno.getNome() != null) {
             condicao.put("nome", aluno.getNome());
-        } else if (aluno.getCpf() != null) {
+        }
+        if (aluno.getCpf() != null) {
             condicao.put("cpf", aluno.getCpf());
-        } else if (aluno.getEmail() != null) {
+        }
+        if (aluno.getEmail() != null) {
             condicao.put("email", aluno.getEmail());
-        } else if (aluno.getAprovado() != null) {
+        }
+        if (aluno.getAprovado() != null) {
             condicao.put("aprovado", aluno.getAprovado());
         }
         return condicao;

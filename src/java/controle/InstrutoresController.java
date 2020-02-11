@@ -37,17 +37,8 @@ public class InstrutoresController extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet InstrutoresController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet InstrutoresController at " + request.getContextPath() + "</h1>");
-            out.println(mensagem);
-            out.println("<p>" + result + "</p>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println(result);
+
         }
     }
 
@@ -135,7 +126,6 @@ public class InstrutoresController extends HttpServlet {
                 instrutores.setEmail(request.getParameter("your_email"));
                 withCondition = true;
             }
-
             if (withCondition) {
                 result = dao.selectSqlWithCondidion(instrutores);
             } else {
