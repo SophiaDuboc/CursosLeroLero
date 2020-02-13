@@ -129,12 +129,6 @@ h1 {
 	text-align: center;
 }
 
-#novo-add{
-	text-align: right;
-}
-
-#topo-crud{
-	text-align: center;
-	width: 100%;
-	display: inline-block;
+.display-3{
+		text-align: center;
 }

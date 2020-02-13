@@ -6,7 +6,7 @@
     </filter>
     <filter>
         <filter-name>FiltroAdmin</filter-name>
-        <filter-class>filtros.FiltroAdmin</filter-class>
+        <filter-class>filtros.AdminFilter</filter-class>
     </filter>
     <filter-mapping>
         <filter-name>FiltroAdmin</filter-name>
@@ -14,7 +14,10 @@
     </filter-mapping>
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
-        <url-pattern>/*</url-pattern>
+        <url-pattern>/AdministradorController</url-pattern>
+        <url-pattern>/AlunosController</url-pattern>
+        <url-pattern>/InstrutoresController</url-pattern>
+        <url-pattern>/LoginController</url-pattern>
     </filter-mapping>
     <session-config>
         <session-timeout>

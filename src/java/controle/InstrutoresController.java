@@ -36,9 +36,7 @@ public class InstrutoresController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
             out.println(result);
-
         }
     }
 
@@ -62,8 +60,10 @@ public class InstrutoresController extends HttpServlet {
             instrutor.setEmail(request.getParameter("your_email"));
             instrutor.setValorHora(Integer.parseInt(request.getParameter("money")));
             instrutor.setLogin(request.getParameter("username"));
-            instrutor.setSenha(request.getParameter("password"));
-//            instrutor.setExperiencia(request.getParameter("experiencia"));
+            if (request.getAttribute("password") != null) {
+                instrutor.setSenha(request.getAttribute("password").toString());
+            }
+            instrutor.setExperiencia(request.getParameter("experiencia"));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");

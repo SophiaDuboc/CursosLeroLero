@@ -6,9 +6,6 @@
 package filtros;
 
 import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -23,9 +20,9 @@ import javax.servlet.http.HttpSession;
  *
  * @author sophi
  */
-public class FiltroAdmin implements Filter {
+public class AdminFilter implements Filter {
 
-    public FiltroAdmin() {
+    public AdminFilter() {
     }
 
     /**

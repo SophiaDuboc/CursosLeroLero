@@ -58,7 +58,6 @@ public class InstrutoresDAO extends AbstratoDAO {
                 + "email = ?,"
                 + "valor_hora = ?,"
                 + "login = ?,"
-                + "senha = ?,"
                 + "experiencia = ?";
     }
 
@@ -69,8 +68,7 @@ public class InstrutoresDAO extends AbstratoDAO {
         statement.setString(2, instrutor.getEmail());
         statement.setInt(3, instrutor.getValorHora());
         statement.setString(4, instrutor.getLogin());
-        statement.setString(5, instrutor.getSenha());
-        statement.setString(6, instrutor.getExperiencia());
+        statement.setString(5, instrutor.getExperiencia());
         statement.setInt(6, instrutor.getId());
 
         return statement;

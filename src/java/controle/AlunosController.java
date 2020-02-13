@@ -26,17 +26,7 @@ public class AlunosController extends HttpServlet {
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AlunosController</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet CursosController at " + request.getContextPath() + "</h1>");
-            out.println(mensagem);
-            out.println("<p>" + result + "</p>");
-            out.println("</body>");
-            out.println("</html>");
+            out.println(result);
         }
     }
 
@@ -61,7 +51,7 @@ public class AlunosController extends HttpServlet {
             aluno.setEmail(request.getParameter("your_email"));
             aluno.setCelular(request.getParameter("celular"));
             aluno.setLogin(request.getParameter("username"));
-            aluno.setSenha(request.getParameter("password"));
+            aluno.setSenha(request.getAttribute("password").toString());
             aluno.setEndereco(request.getParameter("endereco"));
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
