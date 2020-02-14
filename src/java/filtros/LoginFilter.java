@@ -31,10 +31,11 @@ public class LoginFilter implements Filter {
             if (request.getParameterMap().containsKey("password")) {
                 String senha = request.getParameter("password");
                 String senhaMD5 = getMd5(senha);
-                request.setAttribute("password", senhaMD5);;
+                request.setAttribute("password", senhaMD5);
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {
+            ex.printStackTrace();
             System.err.println("Erro no filtro de login ao encriptar senha: " + ex);
         }
         return;
@@ -43,7 +44,7 @@ public class LoginFilter implements Filter {
     public String getMd5(String senha) {
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
-            byte[] messageDigest = md.digest(senha.toUpperCase().getBytes());
+            byte[] messageDigest = md.digest(senha.getBytes());
             BigInteger no = new BigInteger(1, messageDigest);
             String hashtext = no.toString(16);
 

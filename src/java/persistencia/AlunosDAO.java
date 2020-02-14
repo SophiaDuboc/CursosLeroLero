@@ -32,12 +32,12 @@ public class AlunosDAO extends AbstratoDAO {
 
     @Override
     protected String setColumsNamesToInsert() throws Exception {
-        return "(cpf, nome, email, celular, login, senha, endereco, cidade, bairro, cep, comentario, aprovado)";
+        return "(cpf, nome, email, celular, login, senha, endereco, cidade, bairro, cep, comentario)";
     }
 
     @Override
     protected String setValuesToInsert() throws Exception {
-        return "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        return "(?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
     }
 
     @Override
@@ -54,7 +54,6 @@ public class AlunosDAO extends AbstratoDAO {
         statement.setString(9, aluno.getBairro());
         statement.setString(10, aluno.getCep());
         statement.setString(11, aluno.getComentario());
-        statement.setString(12, aluno.getAprovado());
         return statement;
     }
 

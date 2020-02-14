@@ -44,6 +44,7 @@ public class AlunosController extends HttpServlet {
         String mensagem;
         boolean isSuccess;
         try {
+
             AlunosDAO dao = new AlunosDAO();
             Alunos aluno = new Alunos();
             aluno.setNome(request.getParameter("nome_completo"));
@@ -56,6 +57,10 @@ public class AlunosController extends HttpServlet {
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
             aluno.setCep(request.getParameter("cep"));
+
+            if (request.getParameter("aprovado") != null) {
+                aluno.setAprovado(request.getParameter("aprovado"));
+            }
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
@@ -107,7 +112,7 @@ public class AlunosController extends HttpServlet {
                 withCondition = true;
             }
             if (request.getParameter("cpf") != null) {
-                aluno.setCep(request.getParameter("cpf"));
+                aluno.setCpf(request.getParameter("cpf"));
                 withCondition = true;
             }
             if (withCondition) {

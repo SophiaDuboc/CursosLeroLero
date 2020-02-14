@@ -59,7 +59,7 @@ public class CursosController extends HttpServlet {
             curso.setRequisito(request.getParameter("requisitos"));
             curso.setEmenta(request.getParameter("ementa"));
             curso.setCargaHoraria(Short.parseShort(request.getParameter("carga_horaria")));
-            curso.setPreco(Double.parseDouble(request.getParameter("money")));
+            curso.setPreco(Double.parseDouble(request.getParameter("money").replaceAll("\\.", "").replaceAll(",", ".")));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
@@ -99,36 +99,36 @@ public class CursosController extends HttpServlet {
         String result;
         try {
             CursosDAO dao = new CursosDAO();
-            Cursos cursos = new Cursos();
+            Cursos curso = new Cursos();
 
             boolean withCondition = false;
             if (request.getParameter("id") != null) {
-                cursos.setId(Integer.parseInt(request.getParameter("id")));
+                curso.setId(Integer.parseInt(request.getParameter("id")));
                 withCondition = true;
             }
             if (request.getParameter("nome") != null) {
-                cursos.setNome(request.getParameter("nome"));
+                curso.setNome(request.getParameter("nome"));
                 withCondition = true;
             }
             if (request.getParameter("requisito") != null) {
-                cursos.setRequisito(request.getParameter("requisito"));
+                curso.setRequisito(request.getParameter("requisito"));
                 withCondition = true;
             }
             if (request.getParameter("ementa") != null) {
-                cursos.setEmenta(request.getParameter("ementa"));
+                curso.setEmenta(request.getParameter("ementa"));
                 withCondition = true;
             }
             if (request.getParameter("cargaHoraria") != null) {
-                cursos.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
+                curso.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
                 withCondition = true;
             }
-            if (request.getParameter("preco") != null) {
-                cursos.setPreco(Double.parseDouble(request.getParameter("preco")));
+            if (request.getParameter("money") != null) {
+                curso.setPreco(Double.parseDouble(request.getParameter("money").replaceAll("\\.", "").replaceAll(",", ".")));
                 withCondition = true;
             }
 
             if (withCondition) {
-                result = dao.selectSqlWithCondidion(cursos).toJSONString();
+                result = dao.selectSqlWithCondidion(curso).toJSONString();
             } else {
                 result = dao.selectAllSql().toJSONString();
             }
@@ -157,9 +157,9 @@ public class CursosController extends HttpServlet {
         try {
             mensagem = "sucesso";
             CursosDAO dao = new CursosDAO();
-            Cursos cursos = new Cursos();
-            cursos.setId(Integer.parseInt(request.getParameter("id")));
-            dao.deleteSql(cursos);
+            Cursos curso = new Cursos();
+            curso.setId(Integer.parseInt(request.getParameter("id")));
+            dao.deleteSql(curso);
             System.out.println(mensagem);
             processRequest(request, response, mensagem, "");
         } catch (Exception ex) {
