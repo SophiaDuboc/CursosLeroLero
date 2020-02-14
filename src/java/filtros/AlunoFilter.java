@@ -39,7 +39,7 @@ public class AlunoFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         if (session != null) {
             if (session.getAttribute("tipoSession") != null) {
-                if (session.getAttribute("tipoSession").equals("aluno")) {
+                if (session.getAttribute("tipoSession").equals("aluno") || session.getAttribute("tipoSession").equals("adm")) {
                     chain.doFilter(request, response);
                     return;
                 }

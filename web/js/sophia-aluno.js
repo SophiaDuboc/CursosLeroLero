@@ -14,6 +14,11 @@ $("#myform").validate({
             equalTo: "#password"
         }
     },
+    beforeSubmit: function (form) {
+        form.cpf = form.cpf.replace(/\D/g, "");
+        form.cep = form.cep.replace(/\D/g, "");
+        form.celular = form.celular.replace(/\D/g, "");
+    },
     messages: {
         your_nome_completo: {
             required: "Informe seu nome completo",
@@ -51,12 +56,11 @@ $("#myform").validate({
     focusInvalid: false,
     focusCleanup: true,
     onkeyup: false,
-
-    submitHandler: function (form) {
-        $(".form-registro").hide();
-        $(".form-detalhe").show();
-    }
 });
+function someDiv() {
+    $(".form-registro").hide();
+    $(".form-detalhe").show();
+}
 
 $(document).ready(function () {
     var $campoCpf = $("#cpf").mask('000.000.000-00', {
@@ -68,4 +72,15 @@ $(document).ready(function () {
     var $campoCep = $("#cep").mask('00000-000', {
         reverse: true
     });
+
+
+
 });
+
+$(document)
+        .on('click', 'form button[type=submit]', function (e) {
+            var isValid = $(e.target).parents('form').isValid();
+            if (!isValid) {
+                e.preventDefault(); //prevent the default action
+            }
+        });
