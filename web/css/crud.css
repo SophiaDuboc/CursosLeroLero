@@ -132,3 +132,7 @@ h1 {
 .display-3{
 		text-align: center;
 }
+
+#container-grid-aluno{
+	max-width: 100%;
+}

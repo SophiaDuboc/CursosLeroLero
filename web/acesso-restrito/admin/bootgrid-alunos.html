@@ -36,23 +36,32 @@
     </nav>
 
     <div class="container">
-        <h1 class="display-3">Gestão de Instrutores</h1><hr>
-                <a id="mybtn" class="btn btn-secondary" href="form-instrutor.html">[+] Novo Instrutor </a>
-                        <table id="grid-data" class="table table-condensed table-hover table-striped" data-navigation="3">
-                            <thead>
-                                <tr>
-                                    <th data-column-id="id" data-type="numeric" data-formatter="id">ID</th>
-                                    <th data-column-id="nome" data-formatter="nome">Nome</th>
-                                    <th data-column-id="email"data-formatter="email">E-mail</th>
-                                    <th data-column-id="valor_hora" data-formatter="valor_hora">Valor Hora</th>
-                                    <th data-column-id="login">Login</th>
-                                    <th data-column-id="acoes" data-formatter="acoes" data-sortable="false">Ações</th>
-                                </tr>
-                            </thead>
-                        </table>
-                    <!-- /#list -->
+        <h1 class="display-3">Gestão de Alunos</h1>
+        <hr>
     </div>
-            <!-- /#main -->
+    <div id="container-grid-aluno" class="container">
+        <a id="mybtn" class="btn btn-secondary" href="form-aluno.html">[+] Novo Aluno </a>
+        <table id="grid-data" class="table table-condensed table-hover table-striped" data-navigation="3">
+            <thead>
+                <tr>
+                    <th data-column-id="id" data-type="numeric" data-formatter="id">ID</th>
+                    <th data-column-id="nome" data-formatter="nome">Nome</th>
+                    <th data-column-id="email" data-formatter="email">E-mail</th>
+                    <th data-column-id="celular" data-formatter="celular">Celular</th>
+                    <th data-column-id="login" data-formatter="login">Login</th>
+                    <th data-column-id="endereco" data-formatter="endereco">Endereço</th>
+                    <th data-column-id="cidade" data-formatter="cidade">Cidade</th>
+                    <th data-column-id="bairro" data-formatter="bairro">Bairro</th>
+                    <th data-column-id="cep" data-formatter="cep">CEP</th>
+                    <th data-column-id="comentario" data-formatter="comentario">Comentario</th>
+                    <th data-column-id="aprovado" data-formatter="aprovado">Aprovado</th>
+                    <th data-column-id="acoes" data-formatter="acoes" data-sortable="false">Ações</th>
+                </tr>
+            </thead>
+        </table>
+        <!-- /#list -->
+    </div>
+    <!-- /#main -->
 
     <footer class="container">
         <hr>
@@ -66,9 +75,9 @@
     <script src="../../js/jj.js"></script>
     <script src="../../js/jquery.bootgrid.js"></script>
     <script src="../../js/jquery.bootgrid.fa.js"></script>
-    <script src="../../js/bootgrid-instrutor.js"></script>
+    <script src="../../js/bootgrid-turmas.js"></script>
     <script src="../../js/50892c15c5.js"></script>
-    
+
 </body>
 
 </html>

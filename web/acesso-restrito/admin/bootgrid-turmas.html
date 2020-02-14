@@ -36,16 +36,17 @@
     </nav>
 
     <div class="container">
-        <h1 class="display-3">Gestão de Instrutores</h1><hr>
-                <a id="mybtn" class="btn btn-secondary" href="form-instrutor.html">[+] Novo Instrutor </a>
+        <h1 class="display-3">Gestão de Turmas</h1><hr>
+                <a id="mybtn" class="btn btn-secondary" href="form-turma.html">[+] Nova Turma </a>
                         <table id="grid-data" class="table table-condensed table-hover table-striped" data-navigation="3">
                             <thead>
                                 <tr>
                                     <th data-column-id="id" data-type="numeric" data-formatter="id">ID</th>
-                                    <th data-column-id="nome" data-formatter="nome">Nome</th>
-                                    <th data-column-id="email"data-formatter="email">E-mail</th>
-                                    <th data-column-id="valor_hora" data-formatter="valor_hora">Valor Hora</th>
-                                    <th data-column-id="login">Login</th>
+                                    <th data-column-id="instrutor_id" data-formatter="instrutor_id">Instrutor ID</th>
+                                    <th data-column-id="cursos_id"data-formatter="cursos_id">Curso ID</th>
+                                    <th data-column-id="data_inicio" data-formatter="data_inicio">Data Início</th>
+                                    <th data-column-id="data_final" data-formatter="data_final">Data Final</th>
+                                    <th data-column-id="carga_horaria" data-formatter="carga_horaria">Carga Horária</th>
                                     <th data-column-id="acoes" data-formatter="acoes" data-sortable="false">Ações</th>
                                 </tr>
                             </thead>
@@ -66,7 +67,7 @@
     <script src="../../js/jj.js"></script>
     <script src="../../js/jquery.bootgrid.js"></script>
     <script src="../../js/jquery.bootgrid.fa.js"></script>
-    <script src="../../js/bootgrid-instrutor.js"></script>
+    <script src="../../js/bootgrid-turmas.js"></script>
     <script src="../../js/50892c15c5.js"></script>
     
 </body>
