@@ -4,7 +4,7 @@ var grid = $("#grid-data").bootgrid({
         method: "GET",
         cache: false
     },
-    url: "/CursosLeroLero/CursosController",
+    url: "/CursosLeroLero/TurmasController",
     formatters: {
         "acoes": function (column, row)
         {

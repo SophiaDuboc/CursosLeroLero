@@ -41,11 +41,12 @@ var grid = $("#grid-data").bootgrid({
         row = atualizaEPegaRow("#grid-data", rowId);
         $.ajax({
             url: '/CursosLeroLero/CursosController',
-            data: { //CORRIGIIIIIIIIIIIIIIIIIIIIIIIIIIIIR
+            data: {
                 nome_curso: row.nome_curso,
                 requisitos: row.requisitos,
                 ementa: row.ementa,
                 carga_horaria: row.carga_horaria,
+                money:row.preco,
                 id: row.id
             },
             type: "post"
@@ -59,7 +60,7 @@ var grid = $("#grid-data").bootgrid({
         rowId = $(this).data("row-id");
         row = atualizaEPegaRow("#grid-data", rowId);
         $.ajax({
-            url: '/CursosLeroLero/InstrutoresController?id=' + row.id,
+            url: '/CursosLeroLero/CursosController?id=' + row.id,
             type: "DELETE"
         }).done(function (data, textStatus, jqXHR) {
             alert (data);
@@ -75,9 +76,11 @@ function atualizaEPegaRow (grid, id) {
 
     for (index = 0; index < rowArray.length; index ++) {
         if (rowArray[index].id === id) {
-            rowArray[index].nome = $("#nome" + rowArray[index].id).val();
-            rowArray[index].email = $("#email" + rowArray[index].id).val();
-            rowArray[index].valor_hora = $("#valor_hora" + rowArray[index].id).val();
+            rowArray[index].nome_curso = $("#nome_curso" + rowArray[index].id).val();
+            rowArray[index].requisitos = $("#requisitos" + rowArray[index].id).val();
+            rowArray[index].ementa = $("#ementa" + rowArray[index].id).val();
+            rowArray[index].carga_horaria = $("#carga_horaria" + rowArray[index].id).val();
+            rowArray[index].preco = $("#preco" + rowArray[index].id).val();
             return rowArray[index];
         }
     }
