@@ -22,7 +22,7 @@ public class AlunosController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -41,10 +41,9 @@ public class AlunosController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.setCharacterEncoding("UTF-8");
-        String mensagem;
+        String result = "";
         boolean isSuccess;
         try {
-
             AlunosDAO dao = new AlunosDAO();
             Alunos aluno = new Alunos();
             aluno.setNome(request.getParameter("nome_completo"));
@@ -73,31 +72,32 @@ public class AlunosController extends HttpServlet {
             }
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
+                result = "Inserido ";
                 isSuccess = dao.insertSql(aluno);
             } else {
                 System.out.println("A requisicao eh para um update");
+                result = "Atualizado ";
                 aluno.setId(Integer.parseInt(request.getParameter("id")));
                 isSuccess = dao.updateSql(aluno);
             }
             if (isSuccess) {
-                mensagem = "Sucesso na requisição!";
-                System.out.println(mensagem);
+                result += " com sucesso";
+                System.out.println(result);
             } else {
-                mensagem = "Não foi possível completar a sua requisição.";
-                System.out.println(mensagem);
+                result += " com erro";
+                System.out.println(result);
             }
-            processRequest(request, response, mensagem, "");
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Erro nao previsto ao insrever aluno";
+            result = "Erro nao previsto ao insrever aluno";
             System.out.println("Erro ao gravar usuário: " + printStackTrace(ex));
-            processRequest(request, response, mensagem, "");
+            processRequest(request, response, result);
         }
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
         String result;
         try {
             AlunosDAO dao = new AlunosDAO();
@@ -129,13 +129,13 @@ public class AlunosController extends HttpServlet {
             } else {
                 result = dao.selectAllSql().toJSONString();
             }
-            mensagem = "Select foi um sucesso";
+            String mensagem = "Select foi um sucesso";
             System.out.println(mensagem);
-            processRequest(request, response, mensagem, result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Erro";
-            System.out.println(mensagem + "Erro: " + ex.getMessage());
-            processRequest(request, response, mensagem, "");
+            result = "Erro ao listar alunos";
+            System.out.println(result + ": " + ex.getMessage());
+            processRequest(request, response, result);
         }
     }
 
@@ -150,28 +150,20 @@ public class AlunosController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
+        String result = "Deletado ";
         try {
-            mensagem = "sucesso";
             AlunosDAO dao = new AlunosDAO();
             Alunos aluno = new Alunos();
             aluno.setId(Integer.parseInt(request.getParameter("id")));
             dao.deleteSql(aluno);
-            System.out.println(mensagem);
-            processRequest(request, response, mensagem, "");
+            result = " com sucesso";
+            System.out.println(result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "erro";
-            System.err.println(mensagem + "erro: " + ex.getMessage());
+            result = " com erro";
+            System.err.println(result + ": " + ex.getMessage());
+            processRequest(request, response, result);
         }
     }
 
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }
 }

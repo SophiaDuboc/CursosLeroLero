@@ -80,16 +80,16 @@ public class TurmasDAO extends AbstratoDAO {
             condicao.put("id", Integer.toString(turma.getId()));
         }
         if (turma.getInstrutoresId() != 0) {
-            condicao.put("instrutoresId", Integer.toString(turma.getInstrutoresId()));
+            condicao.put("instrutores_id", Integer.toString(turma.getInstrutoresId()));
         }
         if (turma.getCursosId() != 0) {
-            condicao.put("cursosId", Integer.toString(turma.getCursosId()));
+            condicao.put("cursos_id", Integer.toString(turma.getCursosId()));
         }
         if (turma.getDataInicio() != null) {
-            condicao.put("dataInicio", String.valueOf(turma.getDataInicio()));
+            condicao.put("data_inicio", String.valueOf(turma.getDataInicio()));
         }
         if (turma.getDataFinal() != null) {
-            condicao.put("dataFinal", String.valueOf(turma.getDataFinal()));
+            condicao.put("data_final", String.valueOf(turma.getDataFinal()));
         }
         if (turma.getCargaHoraria() != 0) {
             condicao.put("carga_horaria", Integer.toString(turma.getCargaHoraria()));
@@ -103,10 +103,10 @@ public class TurmasDAO extends AbstratoDAO {
         while (resultSet.next()) {
             Turmas turma = new Turmas();
             turma.setId(resultSet.getInt("id"));
-            turma.setInstrutoresId(resultSet.getInt("instrutoresId"));
-            turma.setCursosId(resultSet.getInt("cursosId"));
-            turma.setDataInicio(resultSet.getDate("dataInicio"));
-            turma.setDataFinal(resultSet.getDate("dataFinal"));
+            turma.setInstrutoresId(resultSet.getInt("instrutores_id"));
+            turma.setCursosId(resultSet.getInt("cursos_id"));
+            turma.setDataInicio(resultSet.getDate("data_inicio"));
+            turma.setDataFinal(resultSet.getDate("data_final"));
             turma.setCargaHoraria(resultSet.getShort("carga_horaria"));
             response.add(turma);
         }
@@ -130,12 +130,12 @@ public class TurmasDAO extends AbstratoDAO {
             JSONArray jsonArray = new JSONArray();
             for (Object objeto : result) {
                 JSONObject json = new JSONObject();
-                Turmas turma = (Turmas) objeto;
+                Turmas turma = (Turmas) objeto; 
                 json.put("id", turma.getId());
-                json.put("instrutoresId", turma.getInstrutoresId());
-                json.put("cursosId", turma.getCursosId());
-                json.put("dataInicio", turma.getDataInicio());
-                json.put("dataFinal", turma.getDataFinal());
+                json.put("instrutores_id", turma.getInstrutoresId());
+                json.put("cursos_id", turma.getCursosId());
+                json.put("data_inicio", (turma.getDataInicio() != null ? turma.getDataInicio().toString() : ""));
+                json.put("data_final", (turma.getDataFinal() != null ? turma.getDataFinal().toString() : ""));
                 json.put("carga_horaria", turma.getCargaHoraria());
                 jsonArray.add(json);
             }

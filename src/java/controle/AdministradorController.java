@@ -31,7 +31,7 @@ public class AdministradorController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -50,7 +50,7 @@ public class AdministradorController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
+        String result = "";
         boolean isSuccess;
         try {
             AdministradorDAO dao = new AdministradorDAO();
@@ -62,25 +62,25 @@ public class AdministradorController extends HttpServlet {
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
                 isSuccess = dao.insertSql(adm);
+                result = "Inserido ";
             } else {
                 System.out.println("A requisicao eh para um update");
                 adm.setId(Integer.parseInt(request.getParameter("id")));
                 isSuccess = dao.updateSql(adm);
+                result = "Update ";
             }
             if (isSuccess) {
-                mensagem = "Sucesso na requisição!";
-                System.out.println(mensagem);
+                System.out.println(result);
             } else {
-                mensagem = "Não foi possível completar a sua requisição.";
-                System.out.println(mensagem);
+                System.out.println(result);
             }
-            processRequest(request, response, mensagem, "");
+            result += "com sucesso";
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Problema não esperado ao inserir adm";
+            result = " com erro";
             System.out.println("Erro ao inserir adm: " + ex.getMessage());
-            processRequest(request, response, mensagem, "");
+            processRequest(request, response, result);
         }
-
     }
 
     /**
@@ -94,8 +94,7 @@ public class AdministradorController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
-        String result;
+        String result = "";
         try {
             AdministradorDAO dao = new AdministradorDAO();
             Administrador adm = new Administrador();
@@ -113,19 +112,18 @@ public class AdministradorController extends HttpServlet {
                 adm.setId(Integer.parseInt(request.getParameter("id")));
                 withCondition = true;
             }
-
             if (withCondition) {
                 result = dao.selectSqlWithCondidion(adm).toJSONString();
             } else {
                 result = dao.selectAllSql().toJSONString();
             }
-            mensagem = "Select foi um sucesso";
-            System.out.println(mensagem);
-            processRequest(request, response, mensagem, result);
+            result = "Select foi um sucesso";
+            System.out.println(result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Erro";
-            System.out.println(mensagem + "Erro: " + ex.getMessage());
-            processRequest(request, response, mensagem, "");
+            result = "Erro";
+            System.out.println(result + ": " + ex.getMessage());
+            processRequest(request, response, result);
         }
     }
 
@@ -140,18 +138,18 @@ public class AdministradorController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
+        String result;
         try {
-            mensagem = "sucesso";
             AdministradorDAO dao = new AdministradorDAO();
             Administrador adm = new Administrador();
             adm.setId(Integer.parseInt(request.getParameter("id")));
             dao.deleteSql(adm);
-            System.out.println(mensagem);
-            processRequest(request, response, mensagem, "");
+            result = "Deletado com sucesso";
+            System.out.println(result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "erro";
-            System.err.println(mensagem + "erro: " + ex.getMessage());
+            result = "Erro o deletar";
+            System.err.println(result + ex.getMessage());
         }
     }
 

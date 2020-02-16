@@ -36,7 +36,7 @@ var grid = $("#grid-data").bootgrid({
             data: {
                 nome_completo: row.nome,
                 your_email: row.email,
-                money: row.valor_hora,
+                valorInt: row.valor_hora,
                 username: row.login,
                 id: row.id
             },
@@ -57,7 +57,7 @@ var grid = $("#grid-data").bootgrid({
             alert (data);
             $("#grid-data").bootgrid('reload');
         });
-        alert("You pressed delete on row: " + $(this).data("row-id"));
+        
     });
 });
 
@@ -75,3 +75,13 @@ function atualizaEPegaRow (grid, id) {
     }
     return null;
 }
+//
+//var form1 = document.getElementById('myform');
+//form1.onsubmit = function(e){
+//    var form = this;
+//    e.preventDefault();
+//    if(confirm("Deseja enviar seus dados?"))
+//        form.submit();
+//        alert("Enviado com sucesso!");
+//};
+    

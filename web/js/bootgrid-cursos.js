@@ -11,25 +11,25 @@ var grid = $("#grid-data").bootgrid({
             return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
                     "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
         },
-        "nome_curso" : function (column, row) 
+        "nome": function (column, row)
         {
-            return '<input type="text" class="form-control" id="nome_curso'+ row.id +'" value="' + row.nome_curso +'"/>'
+            return '<input type="text" class="form-control" id="nome' + row.id + '" value="' + row.nome + '"/>'
         },
-        "requisitos" : function (column, row) 
+        "requisito": function (column, row)
         {
-            return '<input type="text" class="form-control" id="requisitos'+ row.id +'" value="' + row.requisitos +'"/>'
+            return '<input type="text" class="form-control" id="requisito' + row.id + '" value="' + row.requisito + '"/>'
         },
-        "ementa" : function (column, row) 
+        "ementa": function (column, row)
         {
-            return '<input type="text" class="form-control" id="ementa'+ row.id +'" value="' + row.ementa +'"/>'
+            return '<input type="text" class="form-control" id="ementa' + row.id + '" value="' + row.ementa + '"/>'
         },
-        "carga_horaria" : function (column, row) 
+        "carga_horaria": function (column, row)
         {
-            return '<input type="text" class="form-control" id="carga_horaria'+ row.id +'" value="' + row.carga_horaria +'"/>'
+            return '<input type="text" class="form-control" id="carga_horaria' + row.id + '" value="' + row.carga_horaria + '"/>'
         },
-        "preco" : function (column, row) 
+        "preco": function (column, row)
         {
-            return '<input type="text" class="form-control" id="preco'+ row.id +'" value="' + row.preco +'"/>'
+            return '<input type="text" class="form-control" id="preco' + row.id + '" value="' + row.preco + '"/>'
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function ()
@@ -42,16 +42,16 @@ var grid = $("#grid-data").bootgrid({
         $.ajax({
             url: '/CursosLeroLero/CursosController',
             data: {
-                nome_curso: row.nome_curso,
-                requisitos: row.requisitos,
+                nome: row.nome,
+                requisito: row.requisito,
                 ementa: row.ementa,
                 carga_horaria: row.carga_horaria,
-                money:row.preco,
+                money: row.preco,
                 id: row.id
             },
             type: "post"
         }).done(function (data, textStatus, jqXHR) {
-            alert (data);
+            alert(data);
             $("#grid-data").bootgrid('reload');
         });
 
@@ -63,21 +63,19 @@ var grid = $("#grid-data").bootgrid({
             url: '/CursosLeroLero/CursosController?id=' + row.id,
             type: "DELETE"
         }).done(function (data, textStatus, jqXHR) {
-            alert (data);
+            alert(data);
             $("#grid-data").bootgrid('reload');
         });
-        alert("You pressed delete on row: " + $(this).data("row-id"));
     });
 });
 
-
-function atualizaEPegaRow (grid, id) {
+function atualizaEPegaRow(grid, id) {
     rowArray = $(grid).bootgrid("getCurrentRows");
 
-    for (index = 0; index < rowArray.length; index ++) {
+    for (index = 0; index < rowArray.length; index++) {
         if (rowArray[index].id === id) {
-            rowArray[index].nome_curso = $("#nome_curso" + rowArray[index].id).val();
-            rowArray[index].requisitos = $("#requisitos" + rowArray[index].id).val();
+            rowArray[index].nome = $("#nome" + rowArray[index].id).val();
+            rowArray[index].requisito = $("#requisito" + rowArray[index].id).val();
             rowArray[index].ementa = $("#ementa" + rowArray[index].id).val();
             rowArray[index].carga_horaria = $("#carga_horaria" + rowArray[index].id).val();
             rowArray[index].preco = $("#preco" + rowArray[index].id).val();

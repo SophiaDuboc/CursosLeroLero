@@ -11,25 +11,25 @@ var grid = $("#grid-data").bootgrid({
             return "<button type=\"button\" class=\"btn btn-xs btn-default command-edit\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-pencil\"></span></button> " +
                     "<button type=\"button\" class=\"btn btn-xs btn-default command-delete\" data-row-id=\"" + row.id + "\"><span class=\"fa fa-trash-o\"></span></button>";
         },
-        "nome_curso" : function (column, row) 
+        "cursos_id": function (column, row)
         {
-            return '<input type="text" class="form-control" id="nome_curso'+ row.id +'" value="' + row.nome_curso +'"/>'
+            return '<input type="text" class="form-control" id="cursos_id' + row.id + '" value="' + row.cursos_id + '"/>'
         },
-        "requisitos" : function (column, row) 
+        "instrutores_id": function (column, row)
         {
-            return '<input type="text" class="form-control" id="requisitos'+ row.id +'" value="' + row.requisitos +'"/>'
+            return '<input type="text" class="form-control" id="instrutores_id' + row.id + '" value="' + row.instrutores_id + '"/>'
         },
-        "ementa" : function (column, row) 
+        "data_inicio": function (column, row)
         {
-            return '<input type="text" class="form-control" id="ementa'+ row.id +'" value="' + row.ementa +'"/>'
+            return '<input type="text" class="form-control" id="data_inicio' + row.id + '" value="' + row.data_inicio + '"/>'
         },
-        "carga_horaria" : function (column, row) 
+        "data_final": function (column, row)
         {
-            return '<input type="text" class="form-control" id="carga_horaria'+ row.id +'" value="' + row.carga_horaria +'"/>'
+            return '<input type="text" class="form-control" id="data_final' + row.id + '" value="' + row.data_final + '"/>'
         },
-        "money" : function (column, row) 
+        "carga_horaria": function (column, row)
         {
-            return '<input type="text" class="form-control" id="money'+ row.id +'" value="' + row.money +'"/>'
+            return '<input type="text" class="form-control" id="carga_horaria' + row.id + '" value="' + row.carga_horaria + '"/>'
         }
     }
 }).on("loaded.rs.jquery.bootgrid", function ()
@@ -40,44 +40,43 @@ var grid = $("#grid-data").bootgrid({
         rowId = $(this).data("row-id");
         row = atualizaEPegaRow("#grid-data", rowId);
         $.ajax({
-            url: '/CursosLeroLero/CursosController',
-            data: { //CORRIGIIIIIIIIIIIIIIIIIIIIIIIIIIIIR
-                nome_completo: row.nome,
-                your_email: row.email,
-                money: row.valor_hora,
-                username: row.login,
+            url: '/CursosLeroLero/TurmasController',
+            data: {
+                cursos_id: row.cursos_id,
+                data_inicio: row.data_inicio,
+                data_final: row.data_final,
+                instrutores_id: row.instrutores_id,
+                carga_horaria: row.carga_horaria,
                 id: row.id
             },
             type: "post"
         }).done(function (data, textStatus, jqXHR) {
-            alert (data);
+            alert(data);
             $("#grid-data").bootgrid('reload');
         });
-
     }).end().find(".command-delete").on("click", function (e)
     {
         rowId = $(this).data("row-id");
         row = atualizaEPegaRow("#grid-data", rowId);
         $.ajax({
-            url: '/CursosLeroLero/InstrutoresController?id=' + row.id,
+            url: '/CursosLeroLero/TurmasController?id=' + row.id,
             type: "DELETE"
         }).done(function (data, textStatus, jqXHR) {
-            alert (data);
+            alert(data);
             $("#grid-data").bootgrid('reload');
         });
         alert("You pressed delete on row: " + $(this).data("row-id"));
     });
 });
-
-
-function atualizaEPegaRow (grid, id) {
+function atualizaEPegaRow(grid, id) {
     rowArray = $(grid).bootgrid("getCurrentRows");
-
-    for (index = 0; index < rowArray.length; index ++) {
+    for (index = 0; index < rowArray.length; index++) {
         if (rowArray[index].id === id) {
-            rowArray[index].nome = $("#nome" + rowArray[index].id).val();
-            rowArray[index].email = $("#email" + rowArray[index].id).val();
-            rowArray[index].valor_hora = $("#valor_hora" + rowArray[index].id).val();
+            rowArray[index].data_inicio = $("#data_inicio" + rowArray[index].id).val();
+            rowArray[index].data_final = $("#data_final" + rowArray[index].id).val();
+            rowArray[index].carga_horaria = $("#carga_horaria" + rowArray[index].id).val();
+            rowArray[index].instrutores_id = $("#instrutores_id" + rowArray[index].id).val();
+            rowArray[index].cursos_id = $("#cursos_id" + rowArray[index].id).val();
             return rowArray[index];
         }
     }

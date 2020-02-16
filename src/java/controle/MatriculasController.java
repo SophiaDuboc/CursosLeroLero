@@ -32,7 +32,7 @@ public class MatriculasController extends HttpServlet {
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
      */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String mensagem, String result)
+    protected void processRequest(HttpServletRequest request, HttpServletResponse response, String result)
             throws ServletException, IOException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
@@ -51,7 +51,7 @@ public class MatriculasController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
+        String result = "";
         boolean isSuccess;
         try {
             MatriculasDAO dao = new MatriculasDAO();
@@ -63,25 +63,27 @@ public class MatriculasController extends HttpServlet {
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
+                result = "Inserido ";
                 isSuccess = dao.insertSql(mat);
             } else {
                 System.out.println("A requisicao eh para um update");
+                result = "Atualizado ";
                 mat.setId(Integer.parseInt(request.getParameter("id")));
                 isSuccess = dao.updateSql(mat);
             }
             if (isSuccess) {
-                mensagem = "Sucesso na requisição!";
-                System.out.println(mensagem);
+                result += " com sucesso";
+                System.out.println(result);
             } else {
-                mensagem = "Não foi possível completar a sua requisição.";
-                System.out.println(mensagem);
+                result += "com erro";
+                System.out.println(result);
             }
 
-            processRequest(request, response, mensagem, "");
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Erro";
-            System.out.println(mensagem + " : " + ex.getMessage());
-            processRequest(request, response, mensagem, "");
+            result += "problemas";
+            System.out.println(result + " : " + ex.getMessage());
+            processRequest(request, response, result);
         }
 
     }
@@ -97,12 +99,10 @@ public class MatriculasController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
         String result;
         try {
             MatriculasDAO dao = new MatriculasDAO();
             Matriculas mat = new Matriculas();
-
             boolean withCondition = false;
             if (request.getParameter("id") != null) {
                 mat.setId(Integer.parseInt(request.getParameter("id")));
@@ -129,13 +129,13 @@ public class MatriculasController extends HttpServlet {
             } else {
                 result = dao.selectAllSql().toJSONString();
             }
-            mensagem = "Select foi um sucesso";
+            String mensagem = "Select foi um sucesso";
             System.out.println(mensagem);
-            processRequest(request, response, mensagem, result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "Erro";
-            System.out.println(mensagem + "Erro: " + ex.getMessage());
-            processRequest(request, response, mensagem, "");
+            result = "Problemas";
+            System.out.println(result + ": " + ex.getMessage());
+            processRequest(request, response, result);
         }
     }
 
@@ -150,29 +150,19 @@ public class MatriculasController extends HttpServlet {
     @Override
     protected void doDelete(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String mensagem;
+        String result = "Deletado ";
         try {
-            mensagem = "sucesso";
             MatriculasDAO dao = new MatriculasDAO();
             Matriculas mat = new Matriculas();
             mat.setId(Integer.parseInt(request.getParameter("id")));
             dao.deleteSql(mat);
-            System.out.println(mensagem);
-            processRequest(request, response, mensagem, "");
+            result += "com sucesso";
+            System.out.println(result);
+            processRequest(request, response, result);
         } catch (Exception ex) {
-            mensagem = "erro";
-            System.err.println(mensagem + "erro: " + ex.getMessage());
+            result += "com erros";
+            System.err.println(result + ": " + ex.getMessage());
+            processRequest(request, response, result);
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
