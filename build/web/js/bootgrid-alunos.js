@@ -4,7 +4,11 @@ var grid = $("#grid-data").bootgrid({
         method: "GET",
         cache: false
     },
+<<<<<<< HEAD
     url: "/CursosLeroLero/AlunosController",
+=======
+    url: "/CursosLeroLero/CursosController",
+>>>>>>> d0b5e74d15cc6cfd880ad0ab5979ad8bb55cce51
     formatters: {
         "acoes": function (column, row)
         {
