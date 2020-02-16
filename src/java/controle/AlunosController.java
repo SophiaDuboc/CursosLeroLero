@@ -48,20 +48,29 @@ public class AlunosController extends HttpServlet {
             AlunosDAO dao = new AlunosDAO();
             Alunos aluno = new Alunos();
             aluno.setNome(request.getParameter("nome_completo"));
-            aluno.setCpf(request.getParameter("cpf"));
             aluno.setEmail(request.getParameter("your_email"));
-            aluno.setCelular(request.getParameter("celular"));
             aluno.setLogin(request.getParameter("username"));
-            aluno.setSenha(request.getAttribute("password").toString());
+            aluno.setSenha((String) request.getAttribute("password"));
             aluno.setEndereco(request.getParameter("endereco"));
             aluno.setCidade(request.getParameter("cidade"));
             aluno.setBairro(request.getParameter("bairro"));
-            aluno.setCep(request.getParameter("cep"));
 
+            if (request.getParameter("cep") != null) {
+                aluno.setCep(request.getParameter("cep").replaceAll("\\D+", ""));
+            } else {
+                aluno.setCep(request.getParameter("cep"));
+            }
+            if (request.getParameter("celular") != null) {
+                aluno.setCelular(request.getParameter("celular").replaceAll("\\D+", ""));
+            }
+            if (request.getParameter("cpf") != null) {
+                aluno.setCpf(request.getParameter("cpf").replaceAll("\\D+", ""));
+            } else {
+                aluno.setCpf(request.getParameter("cpf"));
+            }
             if (request.getParameter("aprovado") != null) {
                 aluno.setAprovado(request.getParameter("aprovado"));
             }
-
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
                 isSuccess = dao.insertSql(aluno);

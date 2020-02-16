@@ -78,7 +78,7 @@ $(document).ready(function () {
 });
 
 $(document)
-        .on('click', 'form button[type=submit]', function (e) {
+        .on('click','form button[type=button]', function (e) {
             var isValid = $(e.target).parents('form').isValid();
             if (!isValid) {
                 e.preventDefault(); //prevent the default action

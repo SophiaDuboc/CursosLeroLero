@@ -166,11 +166,11 @@ public class AlunosDAO extends AbstratoDAO {
                 json.put("celular", aluno.getCelular());
                 json.put("login", aluno.getLogin());
                 json.put("senha", aluno.getSenha());
-                json.put("endereco", aluno.getEndereco());
-                json.put("cidade", aluno.getCidade());
-                json.put("bairro", aluno.getBairro());
-                json.put("cep", aluno.getCep());
-                json.put("comentario", aluno.getComentario());
+                json.put("endereco", aluno.getEndereco() != null ? aluno.getEndereco() : "");
+                json.put("cidade", aluno.getCidade() != null ? aluno.getCidade() : "");
+                json.put("bairro", aluno.getBairro() != null ? aluno.getBairro() : "");
+                json.put("cep", aluno.getCep() != null ? aluno.getCep() : "");
+                json.put("comentario", aluno.getComentario() != null ? aluno.getComentario() : "");
                 json.put("aprovado", aluno.getAprovado());
                 jsonArray.add(json);
             }

@@ -56,7 +56,7 @@ public class AdministradorController extends HttpServlet {
             AdministradorDAO dao = new AdministradorDAO();
             Administrador adm = new Administrador();
             adm.setLogin(request.getParameter("username"));
-            adm.setSenha(request.getAttribute("password").toString());
+            adm.setSenha((String) request.getAttribute("password"));
             adm.setNome(request.getParameter("name"));
 
             if (request.getParameter("id") == null) {

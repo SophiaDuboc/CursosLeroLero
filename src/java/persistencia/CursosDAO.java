@@ -106,7 +106,7 @@ public class CursosDAO extends AbstratoDAO {
             curso.setNome(resultSet.getString("nome"));
             curso.setRequisito(resultSet.getString("requisito"));
             curso.setEmenta(resultSet.getString("ementa"));
-            curso.setCargaHoraria(resultSet.getShort("cargaHoraria"));
+            curso.setCargaHoraria(resultSet.getShort("carga_horaria"));
             curso.setPreco(resultSet.getDouble("preco"));
             response.add(curso);
         }
@@ -133,8 +133,8 @@ public class CursosDAO extends AbstratoDAO {
                 Cursos curso = (Cursos) objeto;
                 json.put("id", curso.getId());
                 json.put("nome", curso.getNome());
-                json.put("requisito", curso.getRequisito());
-                json.put("ementa", curso.getEmenta());
+                json.put("requisito", (curso.getRequisito() != null ? curso.getRequisito() : ""));
+                json.put("ementa", (curso.getEmenta() != null ? curso.getEmenta() : ""));
                 json.put("carga_horaria", curso.getCargaHoraria());
                 json.put("preco", curso.getPreco());
                 jsonArray.add(json);

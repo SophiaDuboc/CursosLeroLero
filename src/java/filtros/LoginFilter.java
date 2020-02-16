@@ -29,9 +29,11 @@ public class LoginFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         try {
             if (request.getParameterMap().containsKey("password")) {
-                String senha = request.getParameter("password");
-                String senhaMD5 = getMd5(senha);
-                request.setAttribute("password", senhaMD5);
+                if (request.getParameter("password") != null) {
+                    String senha = request.getParameter("password");
+                    String senhaMD5 = getMd5(senha);
+                    request.setAttribute("password", senhaMD5);
+                }
             }
             chain.doFilter(request, response);
         } catch (Exception ex) {

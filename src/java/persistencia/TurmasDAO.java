@@ -92,7 +92,7 @@ public class TurmasDAO extends AbstratoDAO {
             condicao.put("dataFinal", String.valueOf(turma.getDataFinal()));
         }
         if (turma.getCargaHoraria() != 0) {
-            condicao.put("cargaHoraria", Integer.toString(turma.getCargaHoraria()));
+            condicao.put("carga_horaria", Integer.toString(turma.getCargaHoraria()));
         }
         return condicao;
     }
@@ -107,7 +107,7 @@ public class TurmasDAO extends AbstratoDAO {
             turma.setCursosId(resultSet.getInt("cursosId"));
             turma.setDataInicio(resultSet.getDate("dataInicio"));
             turma.setDataFinal(resultSet.getDate("dataFinal"));
-            turma.setCargaHoraria(resultSet.getShort("cargaHoraria"));
+            turma.setCargaHoraria(resultSet.getShort("carga_horaria"));
             response.add(turma);
         }
         return response;
@@ -136,7 +136,7 @@ public class TurmasDAO extends AbstratoDAO {
                 json.put("cursosId", turma.getCursosId());
                 json.put("dataInicio", turma.getDataInicio());
                 json.put("dataFinal", turma.getDataFinal());
-                json.put("cargaHoraria", turma.getCargaHoraria());
+                json.put("carga_horaria", turma.getCargaHoraria());
                 jsonArray.add(json);
             }
             resposta.put("rows", jsonArray);

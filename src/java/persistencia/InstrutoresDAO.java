@@ -143,7 +143,7 @@ public class InstrutoresDAO extends AbstratoDAO {
                 json.put("valor_hora", instrutor.getValorHora());
                 json.put("login", instrutor.getLogin());
                 json.put("senha", instrutor.getSenha());
-                json.put("experiencia", instrutor.getExperiencia());
+                json.put("experiencia", (instrutor.getExperiencia() != null ? instrutor.getExperiencia() : ""));
                 jsonArray.add(json);
             }
             resposta.put("rows", jsonArray);

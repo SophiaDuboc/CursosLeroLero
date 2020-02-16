@@ -39,7 +39,7 @@ public class InstrutorFilter implements Filter {
         HttpSession session = httpRequest.getSession(false);
         if (session != null) {
             if (session.getAttribute("tipoSession") != null) {
-                if (session.getAttribute("tipoSession").equals("instrutor")) {
+                if (session.getAttribute("tipoSession").equals("instrutor") || session.getAttribute("tipoSession").equals("adm")) {
                     chain.doFilter(request, response);
                     return;
                 }
@@ -56,7 +56,6 @@ public class InstrutorFilter implements Filter {
      * Init method for this filter
      */
     public void init(FilterConfig filterConfig) {
-
     }
 
 }

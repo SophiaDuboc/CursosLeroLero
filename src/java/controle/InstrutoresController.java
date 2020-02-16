@@ -58,10 +58,10 @@ public class InstrutoresController extends HttpServlet {
             Instrutores instrutor = new Instrutores();
             instrutor.setNome(request.getParameter("nome_completo"));
             instrutor.setEmail(request.getParameter("your_email"));
-            instrutor.setValorHora(Integer.parseInt(request.getParameter("money")));
+            instrutor.setValorHora(Integer.parseInt(request.getParameter("valorInt")));
             instrutor.setLogin(request.getParameter("username"));
             if (request.getAttribute("password") != null) {
-                instrutor.setSenha(request.getAttribute("password").toString());
+                instrutor.setSenha((String) request.getAttribute("password"));
             }
             instrutor.setExperiencia(request.getParameter("experiencia"));
 
@@ -166,15 +166,5 @@ public class InstrutoresController extends HttpServlet {
             System.err.println(mensagem + "erro: " + ex.getMessage());
         }
     }
-
-    /**
-     * Returns a short description of the servlet.
-     *
-     * @return a String containing servlet description
-     */
-    @Override
-    public String getServletInfo() {
-        return "Short description";
-    }// </editor-fold>
-
 }
+    

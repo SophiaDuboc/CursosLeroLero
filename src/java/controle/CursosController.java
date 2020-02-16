@@ -118,8 +118,8 @@ public class CursosController extends HttpServlet {
                 curso.setEmenta(request.getParameter("ementa"));
                 withCondition = true;
             }
-            if (request.getParameter("cargaHoraria") != null) {
-                curso.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
+            if (request.getParameter("carga_horaria") != null) {
+                curso.setCargaHoraria(Short.parseShort(request.getParameter("carga_horaria")));
                 withCondition = true;
             }
             if (request.getParameter("money") != null) {

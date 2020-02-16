@@ -60,7 +60,7 @@ public class TurmasController extends HttpServlet {
             turma.setCursosId(Integer.parseInt(request.getParameter("cursosId")));
             turma.setDataInicio(Date.valueOf(request.getParameter("dataInicio")));
             turma.setDataFinal(Date.valueOf(request.getParameter("dataFinal")));
-            turma.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
+            turma.setCargaHoraria(Short.parseShort(request.getParameter("carga_horaria")));
 
             if (request.getParameter("id") == null) {
                 System.out.println("A requisicao eh para um insert");
@@ -116,8 +116,8 @@ public class TurmasController extends HttpServlet {
                 turmas.setCursosId(Integer.parseInt(request.getParameter("cursosId")));
                 withCondition = true;
             }
-            if (request.getParameter("cargaHoraria") != null) {
-                turmas.setCargaHoraria(Short.parseShort(request.getParameter("cargaHoraria")));
+            if (request.getParameter("carga_horaria") != null) {
+                turmas.setCargaHoraria(Short.parseShort(request.getParameter("carga_horaria")));
                 withCondition = true;
             }
             if (request.getParameter("dataInicio") != null) {
